@@ -83,3 +83,7 @@ open reports/overview.html
 The dashboard has status totals, function/status filters, search, expected results, plain-language outcomes, next steps and expandable screenshots/diagnostics. It works offline and can be printed to PDF. Only selected scenarios are counted; skipped tests are never counted as passes. A lockout warning, when observed, is flagged for review without changing the pytest result. Errors mean setup/cleanup failed. Other failed checks still need investigation before being called website defects.
 
 The existing `--html=reports/report.html --self-contained-html` output remains available for the detailed pytest report. `--dashboard=reports/my-run.html` changes the new dashboard path. Reports overwrite the previous file at the same path; archive important runs before rerunning. Add new scenario descriptions to `SCENARIOS` in `reporting/dashboard.py`. Configured test email/password values are redacted from dashboard text; images and the separate pytest report are not automatically redacted.
+
+### KPI layout
+
+The overview uses a compact two-column dashboard: outcome counts by function, stacked status bars, longest scenario times, pass share, and average duration by function. Durations include setup and cleanup; skipped/not-run scenarios are excluded from duration averages and attempted-scenario pass share. Charts always describe the whole selected run; filters affect scenario details only. Severity, confirmed defects and weekly trends are not inferred from test failures.

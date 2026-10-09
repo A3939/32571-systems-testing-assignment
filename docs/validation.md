@@ -15,3 +15,5 @@ The submitted run showed four passes, four failures and one skipped test. Live s
 ## Readable dashboard checks
 
 The report plugin was exercised with synthetic pass, failure, skip, setup-error and teardown-error scenarios. Totals and cleanup-error precedence were verified. Four offline unit checks passed for rendering totals, HTML escaping, credential redaction, lockout guidance and an empty run. These are reporter checks, not passes against the public website. Run `python -m unittest discover -s qa` to repeat the offline checks.
+
+KPI layout update: existing four reporter tests pass. Additional checks verified distribution percentages, exclusion of skipped cases from timing averages/pass share, and zero-data handling. Browser preview could not run because the browser binary was unavailable; no visual-browser verification is claimed.
