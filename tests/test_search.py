@@ -18,5 +18,5 @@ def test_t003_existing_product(driver, base_url, query, expected):
 def test_t003_s03_no_results(driver, base_url):
     page = SearchPage(driver, base_url).open()
     page.search(f"no-such-product-{uuid4().hex}")
-    page.expect_text("#content", "There is no product that matches the search criteria.")
-    assert not driver.find_elements("css selector", "#content .product-thumb")
+    page.expect_text("#product-search .content-products", "There is no product that matches the search criteria.")
+    assert not driver.find_elements("css selector", "#product-search .content-products .product-thumb")

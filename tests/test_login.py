@@ -8,8 +8,12 @@ pytestmark = pytest.mark.login
 def test_t002_s01_valid_login(credentials, driver, base_url):
     page = LoginPage(driver, base_url).open()
     page.login(*credentials)
-    page.expect_text("#content h2", "My Account")
-    assert "route=account/account" in driver.current_url
+    result = page.login_result()
+    assert result == "authenticated", (
+        f"Login was rejected: {result}. Check that the dedicated demo account "
+        "is registered and that .env contains its correct credentials."
+    )
+    page.visible('a[href*="route=account/logout"]')
 
 
 def test_t002_s02_unknown_account(driver, base_url):

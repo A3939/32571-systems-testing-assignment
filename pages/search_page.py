@@ -11,6 +11,6 @@ class SearchPage(BasePage):
         self.click("#button-search")
 
     def product_titles(self):
-        self.wait.until(lambda d: d.find_elements(By.CSS_SELECTOR, "#content .product-thumb"))
+        self.wait.until(lambda d: d.find_elements(By.CSS_SELECTOR, "#product-search .content-products .product-thumb"))
         return [e.text for e in self.driver.find_elements(
-            By.CSS_SELECTOR, "#content .product-thumb .title a")]
+            By.CSS_SELECTOR, "#product-search .content-products .product-thumb .title a")]
