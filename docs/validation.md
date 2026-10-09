@@ -11,3 +11,7 @@ Run the suite on your own machine with Chrome/Firefox, review the expected messa
 ## Follow-up from local test output
 
 The submitted run showed four passes, four failures and one skipped test. Live search HTML confirmed that results are under `#product-search .content-products`, not `#content`. Both product-card and empty-result assertions now use that results container, excluding unrelated recommendation cards. Login now waits for an authenticated account route or a visible error and verifies a logout link on success. This does not establish that supplied credentials are valid. The user's credentials were not used or committed. Python syntax was checked after the changes; a successful end-to-end rerun is still required locally.
+
+## Readable dashboard checks
+
+The report plugin was exercised with synthetic pass, failure, skip, setup-error and teardown-error scenarios. Totals and cleanup-error precedence were verified. Four offline unit checks passed for rendering totals, HTML escaping, credential redaction, lockout guidance and an empty run. These are reporter checks, not passes against the public website. Run `python -m unittest discover -s qa` to repeat the offline checks.

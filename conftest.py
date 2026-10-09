@@ -10,6 +10,8 @@ from selenium import webdriver
 
 load_dotenv()
 
+pytest_plugins = ["reporting.dashboard"]
+
 
 def pytest_addoption(parser):
     parser.addoption("--browser", choices=["chrome", "firefox"], default="chrome")
@@ -72,6 +74,7 @@ def pytest_runtest_makereport(item, call):
         digest = hashlib.sha256(item.nodeid.encode()).hexdigest()[:10]
         path = directory / f"{stamp}-{digest}.png"
         browser.save_screenshot(str(path))
+        item._dashboard_screenshot = browser.get_screenshot_as_base64()
         if item.config.pluginmanager.hasplugin("html"):
             from pytest_html import extras
             report.extras = getattr(report, "extras", []) + [
