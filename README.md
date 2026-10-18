@@ -1,6 +1,6 @@
 # 32571 Systems Testing — Python + Selenium
 
-Team starter for the LambdaTest e-commerce playground, using Python 3.11+, Selenium 4 and pytest. Includes nine example scenarios across registration, login and search. This is a boilerplate, not a completed assignment report.
+Team starter for the LambdaTest e-commerce playground, using Python 3.11+, Selenium 4 and pytest. Includes twelve scenarios across registration, login, logout and search. Member 1's assigned work is registration (#11), login (#12) and logout (#19): three functions with three scenarios each. This repository is not a completed assignment report.
 
 ## Setup (macOS / Linux)
 
@@ -33,13 +33,16 @@ Run from the repository root:
 ```bash
 python -m pytest --collect-only -q
 python -m pytest -m search
+python -m pytest -m "registration or login or logout" --headless --screenshots=all
 python -m pytest --headless --html=reports/report.html --self-contained-html --junitxml=reports/results.xml
 python -m pytest --browser firefox --headless
 python -m pytest -m registration --allow-account-creation
 python -m pytest tests/test_login.py --screenshots=all
 ```
 
-Account creation is skipped unless explicitly enabled because it creates a new persistent demo account every run. Tests use synthetic data. Successful login is skipped until you put a dedicated, already registered test account in `TEST_EMAIL` and `TEST_PASSWORD` in `.env`. No test depends on another test running first. Credentials are never committed. Registration-generated disposable addresses are not reused as the login fixture.
+Account creation is skipped unless explicitly enabled because it creates a new persistent demo account every run. Tests use synthetic data. Successful login and all logout scenarios are skipped until you put a dedicated, already registered test account in `TEST_EMAIL` and `TEST_PASSWORD` in `.env`. No test depends on another test running first. Credentials are never committed. Registration-generated disposable addresses are not reused as the login fixture. Each logout scenario signs in independently using a fresh browser session.
+
+Your three assigned case tables, prerequisites and evidence commands are in [docs/member-1-test-cases.md](docs/member-1-test-cases.md). Search remains available as a separate team example.
 
 `--base-url` overrides `BASE_URL` from `.env` for a compatible deployment. Default: https://ecommerce-playground.lambdatest.io . Browser sessions are fresh for each test and closed afterwards. Explicit waits handle page updates; no fixed sleeps.
 
@@ -47,14 +50,23 @@ Account creation is skipped unless explicitly enabled because it creates a new p
 
 - `conftest.py`: browser fixtures, options, credentials, screenshot hook.
 - `pages/`: reusable selectors and page actions.
-- `tests/`: assertions, test data and scenario IDs.
-- `docs/test-plan.md`: nine starter scenarios, dependencies and reporting guidance.
+- `tests/`: browser tests for registration, login, logout and search.
+- `tests/reporting/`: offline tests for the dashboard code.
+- `reporting/`: Python code that builds the dashboard.
+- `docs/test-plan.md`: twelve scenarios, dependencies and reporting guidance.
+- `docs/member-1-test-cases.md`: your assigned registration, login and logout cases.
 - `docs/test-case-template.md`: copy for each member/function.
 - `reports/`: generated HTML, JUnit XML and PNG evidence (gitignored).
 
+The default `python -m pytest` run includes only website scenarios. Run the dashboard checks separately without a browser:
+
+```bash
+python -m unittest discover -s tests/reporting
+```
+
 ## Team workflow
 
-Each member should implement three function-based cases, each with three scenarios, using unique IDs. Agree function ownership first; these three example functions are not sufficient for the whole team. Create a branch such as `feature/aditya-registration`, add page methods and tests, fill the case template, run tests and open a pull request. Keep assertions in tests and shared browser interactions in page objects.
+Each member should implement three function-based cases, each with three scenarios, using unique IDs. Member 1 owns F01/T001 Registration, F02/T002 Login and F09/T009 Logout in issues #11, #12 and #19. These cases and the search example do not cover the whole team's allocation. Create a branch such as `feature/aditya-account-tests`, add page methods and tests, fill the case template, run tests and open a pull request. Keep assertions in tests and shared browser interactions in page objects.
 
 Use `--screenshots=all` for successful as well as failed scenario evidence. Screenshots are embedded in the HTML report and saved under `reports/screenshots/`. Keep each final evidence run in a separate folder before rerunning. Screenshots may show account data; review before sharing. HTML reports may contain assertion details. Neither reports nor `.env` are committed automatically.
 

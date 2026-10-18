@@ -1,3 +1,5 @@
+from urllib.parse import parse_qs, urlparse
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -12,6 +14,9 @@ class BasePage:
     def open_route(self, route):
         self.driver.get(f"{self.base_url}/index.php?route={route}")
         return self
+
+    def current_route(self):
+        return parse_qs(urlparse(self.driver.current_url).query).get("route", [""])[0]
 
     def visible(self, selector):
         return self.wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, selector)))

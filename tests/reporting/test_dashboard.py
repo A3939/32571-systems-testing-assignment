@@ -1,4 +1,4 @@
-"""Offline checks: python -m unittest discover -s qa."""
+"""Offline checks: python -m unittest discover -s tests/reporting."""
 import os
 import unittest
 from unittest.mock import patch

@@ -1,5 +1,5 @@
-from urllib.parse import parse_qs, urlparse
 from selenium.webdriver.common.by import By
+
 from pages.base_page import BasePage
 
 
@@ -8,9 +8,14 @@ class RegistrationPage(BasePage):
         return self.open_route("account/register")
 
     def complete(self, email, password="Study!Pass123", confirm=None):
-        values = {"firstname": "Study", "lastname": "Tester", "email": email,
-                  "telephone": "0412345678", "password": password,
-                  "confirm": password if confirm is None else confirm}
+        values = {
+            "firstname": "Study",
+            "lastname": "Tester",
+            "email": email,
+            "telephone": "0412345678",
+            "password": password,
+            "confirm": password if confirm is None else confirm,
+        }
         for name, value in values.items():
             self.fill(f"#input-{name}", value)
         return self
@@ -35,11 +40,21 @@ class LoginPage(BasePage):
     def login_result(self):
         """Return a clear outcome without assuming a particular heading layout."""
         def outcome(driver):
-            route = parse_qs(urlparse(driver.current_url).query).get("route", [""])[0]
-            if route == "account/account":
+            if self.current_route() == "account/account":
                 return "authenticated"
             alerts = driver.find_elements(By.CSS_SELECTOR, ".alert-danger")
             messages = [alert.text for alert in alerts if alert.is_displayed() and alert.text]
             return " | ".join(messages) if messages else False
 
         return self.wait.until(outcome, "Login produced neither an account page nor a visible error")
+
+
+class AccountPage(BasePage):
+    # Target the sidebar link; a matching menu link may be hidden.
+    LOGOUT_LINK = 'a.list-group-item[href*="route=account/logout"]'
+
+    def open(self):
+        return self.open_route("account/account")
+
+    def logout(self):
+        self.click(self.LOGOUT_LINK)

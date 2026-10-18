@@ -21,6 +21,9 @@ SCENARIOS = {
     "test_t003_existing_product[T003-S01-iPhone]": ("Search", "T003 · S01", "Search for iPhone", "At least one product title contains iPhone."),
     "test_t003_existing_product[T003-S02-MacBook]": ("Search", "T003 · S02", "Search for MacBook", "At least one product title contains MacBook."),
     "test_t003_s03_no_results": ("Search", "T003 · S03", "Search for a nonexistent product", "A no-results message appears and there are no result cards."),
+    "test_t009_s01_logout_authenticated_session": ("Logout", "T009 · S01", "Log out of an authenticated session", "The logout confirmation appears after signing out."),
+    "test_t009_s02_protected_account_after_logout": ("Logout", "T009 · S02", "Protect account access after logout", "Opening the account page redirects to the login form."),
+    "test_t009_s03_login_again_after_logout": ("Logout", "T009 · S03", "Log in again after logout", "The same account can log in again and the logout link is visible."),
 }
 STATUSES = ("Passed", "Failed", "Error", "Skipped", "Not run")
 
