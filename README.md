@@ -44,6 +44,8 @@ Account creation is skipped unless explicitly enabled because it creates a new p
 
 Your three assigned case tables, prerequisites and evidence commands are in [docs/member-1-test-cases.md](docs/member-1-test-cases.md). Search remains available as a separate team example.
 
+The dedicated [T001 registration write-up](docs/t001-registration.md) contains the Section 6 table, expected-outcome rationale and registration evidence.
+
 `--base-url` overrides `BASE_URL` from `.env` for a compatible deployment. Default: https://ecommerce-playground.lambdatest.io . Browser sessions are fresh for each test and closed afterwards. Explicit waits handle page updates; no fixed sleeps.
 
 ## Structure

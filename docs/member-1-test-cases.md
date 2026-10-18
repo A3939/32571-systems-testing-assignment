@@ -1,6 +1,8 @@
 # Member 1: registration, login and logout
 
-Tester: GitHub `A3939`; enter your full name and student ID before submission.
+Tester: **Aditya Girishkumar Patel** · Student ID: **25723634** · GitHub `A3939`.
+
+The dedicated [T001 / F01 Section 6 write-up](t001-registration.md) contains the latest registration case details and evidence. The tables below preserve the 16 October development run. The live group catalogue in [#3](https://github.com/A3939/32571-systems-testing-assignment/issues/3) has since changed F02/F09 scope; those two historical sections need separate alignment with the updated allocation.
 
 Assigned issues: [#11 Registration](https://github.com/A3939/32571-systems-testing-assignment/issues/11), [#12 Login](https://github.com/A3939/32571-systems-testing-assignment/issues/12), and [#19 Logout](https://github.com/A3939/32571-systems-testing-assignment/issues/19). These are three function-based cases with nine scenarios. Search is outside this individual allocation.
 
