@@ -27,6 +27,16 @@ class ProductPage(BasePage):
         )
         return availability.split(":", 1)[1].strip()
 
+    def add_to_compare(self):
+        product_name = self.name()
+        self.click(
+            'button[title="Compare this Product"], '
+            'button[data-original-title="Compare this Product"]'
+        )
+        message = self.visible(".alert-success").text
+        assert product_name in message
+        return message
+
     def option_label(self, selector):
         option = self.visible(selector)
         option_id = option.get_attribute("id")

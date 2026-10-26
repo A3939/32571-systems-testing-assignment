@@ -24,6 +24,9 @@ SCENARIOS = {
     "test_t004_s01_product_identity": ("Product details", "T004 · S01", "Verify product identity", "The product name, main image and product URL identify MacBook."),
     "test_t004_s02_price_and_availability": ("Product details", "T004 · S02", "Verify price and availability", "The MacBook page displays the expected price and availability."),
     "test_t004_s03_required_option": ("Product details", "T004 · S03", "Select a required product option", "The Canon EOS 5D page offers the expected choices and retains the selected option."),
+    "test_t008_s01_add_two_products": ("Product comparison", "T008 · S01", "Add two products to comparison", "The comparison page displays MacBook and MacBook Air in separate columns."),
+    "test_t008_s02_verify_comparison_details": ("Product comparison", "T008 · S02", "Verify comparison details", "The page displays the expected names, prices, models, brands and availability."),
+    "test_t008_s03_add_third_product": ("Product comparison", "T008 · S03", "Add a third product", "The comparison page displays MacBook, MacBook Air and MacBook Pro with the expected prices."),
 }
 STATUSES = ("Passed", "Failed", "Error", "Skipped", "Not run")
 
