@@ -1,6 +1,6 @@
 # 32571 Systems Testing — Python + Selenium
 
-Team starter for the LambdaTest e-commerce playground, using Python 3.11+, Selenium 4 and pytest. Includes nine example scenarios across registration, login and search. This is a boilerplate, not a completed assignment report.
+Team starter for the OpenCart Abstracta demo store, using Python 3.11+, Selenium 4 and pytest. Includes nine example scenarios across registration, login and search. This is a boilerplate, not a completed assignment report.
 
 ## Setup (macOS / Linux)
 
@@ -41,7 +41,7 @@ python -m pytest tests/test_login.py --screenshots=all
 
 Account creation is skipped unless explicitly enabled because it creates a new persistent demo account every run. Tests use synthetic data. Successful login is skipped until you put a dedicated, already registered test account in `TEST_EMAIL` and `TEST_PASSWORD` in `.env`. No test depends on another test running first. Credentials are never committed. Registration-generated disposable addresses are not reused as the login fixture.
 
-`--base-url` overrides `BASE_URL` from `.env` for a compatible deployment. Default: https://ecommerce-playground.lambdatest.io . Browser sessions are fresh for each test and closed afterwards. Explicit waits handle page updates; no fixed sleeps.
+`--base-url` overrides `BASE_URL` from `.env` for a compatible deployment. Default: https://opencart.abstracta.us . Browser sessions are fresh for each test and closed afterwards. Explicit waits handle page updates; no fixed sleeps.
 
 ## Structure
 

@@ -16,7 +16,7 @@ pytest_plugins = ["reporting.dashboard"]
 def pytest_addoption(parser):
     parser.addoption("--browser", choices=["chrome", "firefox"], default="chrome")
     parser.addoption("--headless", action="store_true")
-    parser.addoption("--base-url", default=os.getenv("BASE_URL", "https://ecommerce-playground.lambdatest.io"))
+    parser.addoption("--base-url", default=os.getenv("BASE_URL", "https://opencart.abstracta.us"))
     parser.addoption("--allow-account-creation", action="store_true")
     parser.addoption("--screenshots", choices=["failed", "all", "none"], default="failed")
 
