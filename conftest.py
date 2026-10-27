@@ -1,14 +1,20 @@
 import hashlib
+import json
 import os
+import secrets
 from datetime import datetime, timezone
 from pathlib import Path
 import warnings
+from uuid import uuid4
 
 import pytest
 from dotenv import load_dotenv
 from selenium import webdriver
 
-load_dotenv()
+from pages.account_page import AccountPage, RegistrationPage
+from reporting.output import configure_report_paths
+
+load_dotenv(Path(__file__).parent / ".env")
 
 pytest_plugins = ["reporting.dashboard"]
 
@@ -16,9 +22,15 @@ pytest_plugins = ["reporting.dashboard"]
 def pytest_addoption(parser):
     parser.addoption("--browser", choices=["chrome", "firefox"], default="chrome")
     parser.addoption("--headless", action="store_true")
-    parser.addoption("--base-url", default=os.getenv("BASE_URL", "https://ecommerce-playground.lambdatest.io"))
+    parser.addoption("--base-url", default=os.getenv("BASE_URL", "https://opencart.abstracta.us"))
     parser.addoption("--allow-account-creation", action="store_true")
     parser.addoption("--screenshots", choices=["failed", "all", "none"], default="failed")
+    parser.addoption("--evidence-dir", help="Run directory for screenshots and the default report")
+
+
+@pytest.hookimpl(tryfirst=True)
+def pytest_configure(config):
+    configure_report_paths(config)
 
 
 def pytest_collection_modifyitems(config, items):
@@ -51,11 +63,35 @@ def driver(request):
 
 
 @pytest.fixture
-def credentials():
-    email, password = os.getenv("TEST_EMAIL"), os.getenv("TEST_PASSWORD")
-    if not email or not password:
-        pytest.skip("Set TEST_EMAIL and TEST_PASSWORD in .env for a registered demo account")
+def registered_account(request, driver, base_url):
+    """Prepare a dedicated account without relying on any other test's run."""
+    if not request.config.getoption("--allow-account-creation"):
+        pytest.skip("Use --allow-account-creation to prepare a dedicated synthetic account")
+    email, password = f"uts-{uuid4().hex}@example.com", secrets.token_urlsafe(12)
+    page = RegistrationPage(driver, base_url).open()
+    page.complete(email, password=password)
+    page.accept_policy()
+    page.submit()
+    page.expect_text("#content", "Congratulations! Your new account has been successfully created!")
+    assert page.current_route() == "account/success", "Account prerequisite did not reach success"
+    AccountPage(driver, base_url).logout()
+    page.expect_text("#content", "You have been logged off your account.")
+    assert page.current_route() == "account/logout", "Account prerequisite did not log out"
     return email, password
+
+
+@pytest.fixture
+def checkpoint(request, driver):
+    """Capture intermediate lifecycle states when all evidence is requested."""
+    def capture(step):
+        if request.config.getoption("--screenshots") != "all":
+            return
+        directory = Path(request.config.getoption("--evidence-dir")) / "steps"
+        directory.mkdir(parents=True, exist_ok=True)
+        path = directory / f"{request.node.name}-{step}.png"
+        driver.save_screenshot(str(path))
+        request.node.user_properties.append((f"step_{step}", driver.current_url))
+    return capture
 
 
 @pytest.hookimpl(hookwrapper=True)
@@ -68,13 +104,21 @@ def pytest_runtest_makereport(item, call):
     if mode == "none" or not capture or browser is None:
         return
     try:
-        directory = Path("reports/screenshots")
+        directory = Path(item.config.getoption("--evidence-dir")) / "screenshots"
         directory.mkdir(parents=True, exist_ok=True)
         stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%f")
         digest = hashlib.sha256(item.nodeid.encode()).hexdigest()[:10]
         path = directory / f"{stamp}-{digest}.png"
         browser.save_screenshot(str(path))
         item._dashboard_screenshot = browser.get_screenshot_as_base64()
+        observations = [
+            ("screenshot", str(path)),
+            ("observed_url", browser.current_url),
+            ("observed_heading", " | ".join(e.text for e in browser.find_elements("css selector", "#content h1"))),
+            ("observed_alert", " | ".join(e.text for e in browser.find_elements("css selector", ".alert-danger, .alert-success") if e.is_displayed())),
+        ]
+        item.user_properties.extend(observations)
+        path.with_suffix(".json").write_text(json.dumps(dict(observations), indent=2) + "\n")
         if item.config.pluginmanager.hasplugin("html"):
             from pytest_html import extras
             report.extras = getattr(report, "extras", []) + [
