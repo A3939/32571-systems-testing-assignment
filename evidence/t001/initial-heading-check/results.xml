@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="3" time="29.473" timestamp="2026-10-27T15:36:02.609697+11:00" hostname="Mac.lan"><testcase classname="tests.test_registration" name="test_t001_s01_valid_registration" time="19.293"><failure message="selenium.common.exceptions.TimeoutException: Message:">driver = &lt;selenium.webdriver.chrome.webdriver.WebDriver (session="bbd2f052fc99f38d03cd3d64108c8457")&gt;
+base_url = 'https://opencart.abstracta.us'
+
+    @pytest.mark.creates_account
+    def test_t001_s01_valid_registration(driver, base_url):
+        page = RegistrationPage(driver, base_url).open()
+        page.complete(new_email())
+        page.accept_policy()
+        page.submit()
+&gt;       page.expect_text("#content h1", "Your Account Has Been Created!")
+
+tests/test_registration.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/base_page.py:31: in expect_text
+    self.wait.until(EC.text_to_be_present_in_element((By.CSS_SELECTOR, selector), text))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;selenium.webdriver.support.wait.WebDriverWait (session="bbd2f052fc99f38d03cd3d64108c8457")&gt;
+method = &lt;function text_to_be_present_in_element.&lt;locals&gt;._predicate at 0x10b3d53a0&gt;
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -&gt; T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            &gt;&gt;&gt; from selenium.webdriver.common.by import By
+            &gt;&gt;&gt; from selenium.webdriver.support.wait import WebDriverWait
+            &gt;&gt;&gt; from selenium.webdriver.support import expected_conditions as EC
+            &gt;&gt;&gt;
+            &gt;&gt;&gt; # Wait until an element is visible on the page
+            &gt;&gt;&gt; wait = WebDriverWait(driver, 10)
+            &gt;&gt;&gt; element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            &gt;&gt;&gt; print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() &gt; end_time:
+                break
+            time.sleep(self._poll)
+&gt;       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message:
+
+/Users/aditya/Documents/GitHub/32571-systems-testing-assignment/.venv/lib/python3.12/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException</failure></testcase><testcase classname="tests.test_registration" name="test_t001_s02_password_mismatch" time="5.002" /><testcase classname="tests.test_registration" name="test_t001_s03_policy_required" time="4.501" /></testsuite></testsuites>

@@ -15,7 +15,9 @@ def test_t001_s01_valid_registration(driver, base_url):
     page.complete(new_email())
     page.accept_policy()
     page.submit()
-    page.expect_text("#content h1", "Your Account Has Been Created!")
+    page.expect_text("#content", "Congratulations! Your new account has been successfully created!")
+    assert page.current_route() == "account/success"
+    page.visible('a.list-group-item[href*="route=account/logout"]')
 
 
 def test_t001_s02_password_mismatch(driver, base_url):
@@ -24,6 +26,8 @@ def test_t001_s02_password_mismatch(driver, base_url):
     page.accept_policy()
     page.submit()
     page.expect_text("#input-confirm + .text-danger", "Password confirmation does not match password!")
+    assert page.current_route() == "account/register"
+    assert not page.driver.find_elements("css selector", 'a.list-group-item[href*="route=account/logout"]')
 
 
 def test_t001_s03_policy_required(driver, base_url):
@@ -31,3 +35,5 @@ def test_t001_s03_policy_required(driver, base_url):
     page.complete(new_email())
     page.submit()
     page.expect_text(".alert-danger", "You must agree to the Privacy Policy!")
+    assert page.current_route() == "account/register"
+    assert not page.driver.find_elements("css selector", 'a.list-group-item[href*="route=account/logout"]')

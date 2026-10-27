@@ -1,0 +1,22 @@
+{
+  "captured_utc": "2026-10-27T04:37:51.219497+00:00",
+  "target": "https://opencart.abstracta.us",
+  "tester": "Aditya Girishkumar Patel / 25723634 / A3939",
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "python": "3.12.14",
+  "source_base_commit": "4276559a1fbbde6700868a714db77cc29ab786b3",
+  "source_sha256": {
+    "tests/test_registration.py": "221a8b9e4193232df4b3a1ef3a555f00c5cf66e3e841de72002830df5f0df04d",
+    "pages/account_page.py": "85ebe38373b041dc7c7f22c5580aa729ddbfb0638241f88c012dacb2b47b6768",
+    "pages/base_page.py": "8d9e028eba09c6faf7f1bd758d91fcff1625b1dcac31bb514b36fb1f3451c9e1",
+    "conftest.py": "d1c351e8bb295ddc6ffc77e3763f7b732f47bc1af01ec8b72c0d5ca42ba828a4"
+  },
+  "browser": "156.0.8078.48",
+  "driver": "156.0.8078.47 (1d17a2e2ee147bb7d6ae2ab6abdb3a2510c17775-refs/branch-heads/8078@{#1313})",
+  "registration_preflight": {
+    "url": "https://opencart.abstracta.us/index.php?route=account/register",
+    "title": "Register Account",
+    "checkbox_count": 1,
+    "email_type": "email"
+  }
+}
