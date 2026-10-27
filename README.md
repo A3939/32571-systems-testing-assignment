@@ -61,12 +61,11 @@ Account creation is skipped unless explicitly enabled because it creates a new p
 - `docs/t009-password-reset.md`: password reset request UI cases.
 - `docs/member-1-test-cases.md`: your three cases and a combined run command.
 - `evidence/`: reviewed, archived OpenCart runs; choose a new folder for each rerun.
-- `docs/test-case-template.md`: copy for each member/function.
 - `reports/`: generated HTML, JUnit XML and PNG evidence (gitignored).
 
 ## Team workflow
 
-Each member should implement three function-based cases, each with three scenarios, using unique IDs. Use the ownership recorded in the GitHub issues. Create a branch such as `feature/aditya-registration`, add page methods and tests, fill the case template, run tests and open a pull request. Keep assertions in tests and shared browser interactions in page objects.
+Each member should implement three function-based cases, each with three scenarios, using unique IDs. Use the ownership recorded in the GitHub issues. Create a branch such as `feature/aditya-registration`, add page methods and tests, document scenarios and results, run tests and open a pull request. Keep assertions in tests and shared browser interactions in page objects.
 
 Use `--screenshots=all` for successful as well as failed scenario evidence. Screenshots are embedded in the HTML report and saved under `reports/screenshots/`. Keep each final evidence run in a separate folder before rerunning. Screenshots may show account data; review before sharing. HTML reports may contain assertion details. Neither reports nor `.env` are committed automatically.
 
