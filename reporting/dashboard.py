@@ -12,7 +12,7 @@ import pytest
 from reporting.kpi import panels, CSS
 
 SCENARIOS = {
-    "test_t001_s01_valid_registration": ("Registration", "T001 · S01", "Register with valid details", "A new account is created and the confirmation page appears."),
+    "test_t001_s01_valid_registration": ("Registration", "T001 · S01", "Register with valid details", "The success route shows the account-created confirmation and authenticated sidebar."),
     "test_t001_s02_password_mismatch": ("Registration", "T001 · S02", "Reject mismatched passwords", "A password-confirmation error appears."),
     "test_t001_s03_policy_required": ("Registration", "T001 · S03", "Require privacy-policy acceptance", "Registration is rejected with a privacy-policy warning."),
     "test_t002_s01_valid_login": ("Login", "T002 · S01", "Log in with a registered account", "The account page opens and a logout link is visible."),

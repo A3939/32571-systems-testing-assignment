@@ -1,4 +1,5 @@
 import hashlib
+import json
 import os
 from datetime import datetime, timezone
 from pathlib import Path
@@ -8,7 +9,7 @@ import pytest
 from dotenv import load_dotenv
 from selenium import webdriver
 
-load_dotenv()
+load_dotenv(Path(__file__).parent / ".env")
 
 pytest_plugins = ["reporting.dashboard"]
 
@@ -16,9 +17,10 @@ pytest_plugins = ["reporting.dashboard"]
 def pytest_addoption(parser):
     parser.addoption("--browser", choices=["chrome", "firefox"], default="chrome")
     parser.addoption("--headless", action="store_true")
-    parser.addoption("--base-url", default=os.getenv("BASE_URL", "https://ecommerce-playground.lambdatest.io"))
+    parser.addoption("--base-url", default=os.getenv("BASE_URL", "https://opencart.abstracta.us"))
     parser.addoption("--allow-account-creation", action="store_true")
     parser.addoption("--screenshots", choices=["failed", "all", "none"], default="failed")
+    parser.addoption("--evidence-dir", default="reports", help="Directory for scenario screenshots")
 
 
 def pytest_collection_modifyitems(config, items):
@@ -68,13 +70,21 @@ def pytest_runtest_makereport(item, call):
     if mode == "none" or not capture or browser is None:
         return
     try:
-        directory = Path("reports/screenshots")
+        directory = Path(item.config.getoption("--evidence-dir")) / "screenshots"
         directory.mkdir(parents=True, exist_ok=True)
         stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%f")
         digest = hashlib.sha256(item.nodeid.encode()).hexdigest()[:10]
         path = directory / f"{stamp}-{digest}.png"
         browser.save_screenshot(str(path))
         item._dashboard_screenshot = browser.get_screenshot_as_base64()
+        observations = [
+            ("screenshot", str(path)),
+            ("observed_url", browser.current_url),
+            ("observed_heading", " | ".join(e.text for e in browser.find_elements("css selector", "#content h1"))),
+            ("observed_alert", " | ".join(e.text for e in browser.find_elements("css selector", ".alert-danger, .alert-success") if e.is_displayed())),
+        ]
+        item.user_properties.extend(observations)
+        path.with_suffix(".json").write_text(json.dumps(dict(observations), indent=2) + "\n")
         if item.config.pluginmanager.hasplugin("html"):
             from pytest_html import extras
             report.extras = getattr(report, "extras", []) + [

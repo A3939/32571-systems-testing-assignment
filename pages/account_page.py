@@ -1,4 +1,3 @@
-from urllib.parse import parse_qs, urlparse
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 
@@ -16,8 +15,9 @@ class RegistrationPage(BasePage):
         return self
 
     def accept_policy(self):
-        # The native checkbox is styled/hidden; use its visible label.
-        self.click('label[for="input-agree"]')
+        checkbox = self.visible('input[name="agree"]')
+        if not checkbox.is_selected():
+            checkbox.click()
 
     def submit(self):
         self.click('#content input[type="submit"]')
@@ -35,8 +35,7 @@ class LoginPage(BasePage):
     def login_result(self):
         """Return a clear outcome without assuming a particular heading layout."""
         def outcome(driver):
-            route = parse_qs(urlparse(driver.current_url).query).get("route", [""])[0]
-            if route == "account/account":
+            if self.current_route() == "account/account":
                 return "authenticated"
             alerts = driver.find_elements(By.CSS_SELECTOR, ".alert-danger")
             messages = [alert.text for alert in alerts if alert.is_displayed() and alert.text]

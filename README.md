@@ -1,6 +1,6 @@
 # 32571 Systems Testing — Python + Selenium
 
-Team starter for the LambdaTest e-commerce playground, using Python 3.11+, Selenium 4 and pytest. Includes nine example scenarios across registration, login and search. This is a boilerplate, not a completed assignment report.
+Team Selenium tests for OpenCart Abstracta, using Python 3.11+, Selenium 4 and pytest. Member 1 is Aditya Girishkumar Patel (25723634 / `A3939`): F01/T001 registration (#11), F02/T002 authentication including logout (#12), and F09/T009 password reset requests (#19). Search belongs to Member 2; its OpenCart migration is tracked in PR #24.
 
 ## Setup (macOS / Linux)
 
@@ -39,22 +39,30 @@ python -m pytest -m registration --allow-account-creation
 python -m pytest tests/test_login.py --screenshots=all
 ```
 
+Run evidence into a fresh folder, for example:
+
+```bash
+python -m pytest tests/test_registration.py --allow-account-creation --headless --screenshots=all --evidence-dir=reports/t001-new --dashboard=reports/t001-new/overview.html --html=reports/t001-new/report.html --self-contained-html --junitxml=reports/t001-new/results.xml
+```
+
 Account creation is skipped unless explicitly enabled because it creates a new persistent demo account every run. Tests use synthetic data. Successful login is skipped until you put a dedicated, already registered test account in `TEST_EMAIL` and `TEST_PASSWORD` in `.env`. No test depends on another test running first. Credentials are never committed. Registration-generated disposable addresses are not reused as the login fixture.
 
-`--base-url` overrides `BASE_URL` from `.env` for a compatible deployment. Default: https://ecommerce-playground.lambdatest.io . Browser sessions are fresh for each test and closed afterwards. Explicit waits handle page updates; no fixed sleeps.
+`--base-url` overrides `BASE_URL` from `.env` for a compatible deployment. Default: https://opencart.abstracta.us . Browser sessions are fresh for each test and closed afterwards. Explicit waits handle page updates; no fixed sleeps.
 
 ## Structure
 
 - `conftest.py`: browser fixtures, options, credentials, screenshot hook.
 - `pages/`: reusable selectors and page actions.
 - `tests/`: assertions, test data and scenario IDs.
-- `docs/test-plan.md`: nine starter scenarios, dependencies and reporting guidance.
+- `docs/test-plan.md`: scenario allocation, dependencies and reporting guidance.
+- `docs/t001-registration.md`: registration case table, real results and linked evidence.
+- `evidence/`: reviewed, archived OpenCart runs; choose a new folder for each rerun.
 - `docs/test-case-template.md`: copy for each member/function.
 - `reports/`: generated HTML, JUnit XML and PNG evidence (gitignored).
 
 ## Team workflow
 
-Each member should implement three function-based cases, each with three scenarios, using unique IDs. Agree function ownership first; these three example functions are not sufficient for the whole team. Create a branch such as `feature/aditya-registration`, add page methods and tests, fill the case template, run tests and open a pull request. Keep assertions in tests and shared browser interactions in page objects.
+Each member should implement three function-based cases, each with three scenarios, using unique IDs. Use the ownership recorded in the GitHub issues. Create a branch such as `feature/aditya-registration`, add page methods and tests, fill the case template, run tests and open a pull request. Keep assertions in tests and shared browser interactions in page objects.
 
 Use `--screenshots=all` for successful as well as failed scenario evidence. Screenshots are embedded in the HTML report and saved under `reports/screenshots/`. Keep each final evidence run in a separate folder before rerunning. Screenshots may show account data; review before sharing. HTML reports may contain assertion details. Neither reports nor `.env` are committed automatically.
 
