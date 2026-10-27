@@ -21,6 +21,9 @@ SCENARIOS = {
     "test_t003_existing_product[T003-S01-iPhone]": ("Search", "T003 · S01", "Search for iPhone", "At least one product title contains iPhone."),
     "test_t003_existing_product[T003-S02-MacBook]": ("Search", "T003 · S02", "Search for MacBook", "At least one product title contains MacBook."),
     "test_t003_s03_no_results": ("Search", "T003 · S03", "Search for a nonexistent product", "A no-results message appears and there are no result cards."),
+    "test_t009_s01_registered_email": ("Password reset", "T009 · S01", "Request reset for a registered account", "A reset-request confirmation appears on the login route; email delivery is outside scope."),
+    "test_t009_s02_unregistered_email": ("Password reset", "T009 · S02", "Reject an unregistered reset email", "The documented unknown-email warning appears, with no success confirmation."),
+    "test_t009_s03_empty_email": ("Password reset", "T009 · S03", "Reject an empty reset email", "The request is rejected on the forgotten-password form, without a success confirmation."),
 }
 STATUSES = ("Passed", "Failed", "Error", "Skipped", "Not run")
 

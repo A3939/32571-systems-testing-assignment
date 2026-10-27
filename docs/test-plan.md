@@ -1,18 +1,22 @@
 # Test plan
 
-Target: https://opencart.abstracta.us/. Aditya (Member 1 / A3939) owns F01/T001 registration (#11), F02/T002 authentication including logout (#12), and F09/T009 password reset request (#19). This plan states expected behaviour; actual results live in the individual case documents. Search remains Member 2 work (PR #24).
+Target: https://opencart.abstracta.us/. Aditya (Member 1 / A3939) owns F01/T001 registration (#11), F02/T002 authentication including logout (#12), and F09/T009 password reset request (#19). This plan states expected behaviour; actual results live in the individual case documents. Search remains Member 2 work (PR #24). The [Member 1 index](member-1-test-cases.md) links completed case tables and evidence.
 
 | Function / case | Scenario | Expected result |
 | --- | --- | --- |
 | F01 Registration / T001 | S01 Valid unique email, matching passwords, policy checked | Success route, explicit account-created message and authenticated sidebar |
 | F01 Registration / T001 | S02 Mismatched passwords | Specific confirmation error |
 | F01 Registration / T001 | S03 Policy unchecked | Specific privacy-policy warning |
-| F02 Login / T002 | S01 Authentication lifecycle | Login, account access, logout, protected-route rejection and fresh login |
-| F02 Login / T002 | S02 Random unregistered email | Credentials warning |
-| F02 Login / T002 | S03 Empty credentials | Credentials warning |
+| F02 Authentication / T002 | S01 Authentication lifecycle | Login, account access, logout, protected-route rejection and fresh login |
+| F02 Authentication / T002 | S02 Random unregistered email | Credentials warning |
+| F02 Authentication / T002 | S03 Empty credentials | Credentials warning |
 | F03 Search / T003 | S01 iPhone | Matching product title |
 | F03 Search / T003 | S02 MacBook | Matching product title |
 | F03 Search / T003 | S03 Unique nonexistent term | No-result message and no cards |
+
+| F09 Password reset request / T009 | S01 Dedicated registered email | Confirmation on login route; request UI only |
+| F09 Password reset request / T009 | S02 Unknown synthetic email | Documented unknown-email warning; no success |
+| F09 Password reset request / T009 | S03 Empty email | Request rejection; no success |
 
 URLs use `/index.php?route=` and `account/register`, `account/login`, `account/logout`, `account/account`, `account/forgotten` or `product/search` on the configured base URL.
 
