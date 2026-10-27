@@ -54,7 +54,7 @@ Account creation is skipped unless explicitly enabled because it creates a new p
 
 - `conftest.py`: browser fixtures, options, isolated account setup and screenshot hook.
 - `pages/`: reusable selectors and page actions.
-- `tests/`: browser scenarios; offline reporter checks are in `qa/`.
+- `tests/`: browser scenarios for the assignment.
 - `docs/test-plan.md`: scenario allocation, dependencies and reporting guidance.
 - `docs/t001-registration.md`: registration case table, real results and linked evidence.
 - `docs/t002-authentication.md`: login/logout lifecycle and rejection cases.
@@ -82,8 +82,6 @@ Use `--screenshots=all` for successful as well as failed scenario evidence. Scre
 Dependency ranges allow compatible updates; record `python -m pip freeze` with your final evidence for reproducibility. This project does not automatically run public-site browser tests on every commit.
 
 Reference: https://www.selenium.dev/documentation/selenium_manager/
-
-Run offline reporter checks with `python -m unittest discover -s qa`.
 
 ## Readable results dashboard
 

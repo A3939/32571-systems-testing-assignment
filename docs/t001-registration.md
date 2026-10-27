@@ -22,7 +22,6 @@ Source: [tests](../tests/test_registration.py), [page object](../pages/account_p
 
 ```bash
 python -m pytest tests/test_registration.py --allow-account-creation --headless --screenshots=all --evidence-dir=evidence/t001 --dashboard=evidence/t001/overview.html --html=evidence/t001/report.html --self-contained-html --junitxml=evidence/t001/results.xml
-python -m unittest discover -s qa
 python -m pytest --collect-only -q
 ```
 
