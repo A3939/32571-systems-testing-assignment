@@ -28,22 +28,22 @@ If activation is restricted, run `.\.venv\Scripts\python.exe -m pytest` directly
 
 ## Run
 
-Run from the repository root:
+Run your nine Member 1 scenarios from the repository root:
+
+```bash
+python -m pytest tests/test_registration.py tests/test_login.py tests/test_password_reset.py --allow-account-creation --headless --screenshots=all
+open reports/latest.html
+```
+
+Each run automatically gets a new folder under `reports/runs/`. Its report, screenshots and lifecycle checkpoints stay together. `reports/latest.html` opens the newest default run; earlier run folders are preserved. Collection-only commands create no reports.
+
+Other useful commands:
 
 ```bash
 python -m pytest --collect-only -q
-python -m pytest -m search
-python -m pytest --headless --html=reports/report.html --self-contained-html --junitxml=reports/results.xml
-python -m pytest --browser firefox --headless
-python -m pytest -m registration --allow-account-creation
-python -m pytest tests/test_login.py --allow-account-creation --headless --screenshots=all
+python -m pytest tests/test_login.py --allow-account-creation --screenshots=all
 python -m pytest tests/test_password_reset.py --allow-account-creation --headless --screenshots=all
-```
-
-Run evidence into a fresh folder, for example:
-
-```bash
-python -m pytest tests/test_registration.py --allow-account-creation --headless --screenshots=all --evidence-dir=reports/t001-new --dashboard=reports/t001-new/overview.html --html=reports/t001-new/report.html --self-contained-html --junitxml=reports/t001-new/results.xml
+python -m pytest -m search
 ```
 
 Account creation is skipped unless explicitly enabled because it creates a new persistent demo account every run. Tests use synthetic data. The authentication lifecycle and positive password-reset case each prepare a unique synthetic account and log out during setup. Enable them with `--allow-account-creation`; they need no `.env` credentials and never depend on a registration test running first. Each test has a fresh browser.
@@ -54,20 +54,21 @@ Account creation is skipped unless explicitly enabled because it creates a new p
 
 - `conftest.py`: browser fixtures, options, isolated account setup and screenshot hook.
 - `pages/`: reusable selectors and page actions.
-- `tests/`: assertions, test data and scenario IDs.
+- `tests/`: browser scenarios; offline reporter checks are in `qa/`.
 - `docs/test-plan.md`: scenario allocation, dependencies and reporting guidance.
 - `docs/t001-registration.md`: registration case table, real results and linked evidence.
 - `docs/t002-authentication.md`: login/logout lifecycle and rejection cases.
 - `docs/t009-password-reset.md`: password reset request UI cases.
 - `docs/aditya-test-cases.md`: your three cases and a combined run command.
 - `evidence/`: reviewed, archived OpenCart runs; choose a new folder for each rerun.
-- `reports/`: generated HTML, JUnit XML and PNG evidence (gitignored).
+- `reports/latest.html`: opens the newest generated report.
+- `reports/runs/`: one folder per run with its report and screenshots (gitignored).
 
 ## Team workflow
 
 Each member should implement three function-based cases, each with three scenarios, using unique IDs. Use the ownership recorded in the GitHub issues. Create a branch such as `feature/aditya-registration`, add page methods and tests, document scenarios and results, run tests and open a pull request. Keep assertions in tests and shared browser interactions in page objects.
 
-Use `--screenshots=all` for successful as well as failed scenario evidence. Screenshots are embedded in the HTML report and saved under `reports/screenshots/`. Keep each final evidence run in a separate folder before rerunning. Screenshots may show account data; review before sharing. HTML reports may contain assertion details. Neither reports nor `.env` are committed automatically.
+Use `--screenshots=all` for successful as well as failed scenario evidence. Screenshots are embedded in the HTML report and saved inside that run’s `screenshots/` folder; lifecycle checkpoints go in `steps/`. Default runs are automatically separated into dated folders. Screenshots may show account data; review before sharing. HTML reports may contain assertion details. Neither reports nor `.env` are committed automatically.
 
 ## Troubleshooting and evidence
 
@@ -82,19 +83,14 @@ Dependency ranges allow compatible updates; record `python -m pip freeze` with y
 
 Reference: https://www.selenium.dev/documentation/selenium_manager/
 
+Run offline reporter checks with `python -m unittest discover -s qa`.
+
 ## Readable results dashboard
 
-Every test run now creates `reports/overview.html` automatically. Open it on macOS:
+Every default run saves its report and screenshots together in a new dated directory under `reports/runs/`. Open `reports/latest.html` to view the newest default run. Earlier runs are preserved, and collection-only commands create no output. Reviewed assignment archives in `evidence/` are separate.
 
-```bash
-python -m pytest --screenshots=all
-open reports/overview.html
-```
+The self-contained `overview.html` report contains actual outcomes, scenario descriptions, filters and embedded screenshots. Files in `screenshots/` and `steps/` belong to the same run. Skipped scenarios are not passes, and test failures do not establish website defects.
 
-The dashboard has status totals, function/status filters, search, expected results, plain-language outcomes, next steps and expandable screenshots/diagnostics. It works offline and can be printed to PDF. Only selected scenarios are counted; skipped tests are never counted as passes. A lockout warning, when observed, is flagged for review without changing the pytest result. Errors mean setup/cleanup failed. Other failed checks still need investigation before being called website defects.
+Use `--evidence-dir=reports/runs/my-run` to choose a custom output folder; choose a fresh name each time. `--dashboard=path/overview.html` overrides the report file, with screenshots beside it unless explicitly configured otherwise. Custom paths do not update the latest-run shortcut. Optional pytest-html and JUnit outputs should be given paths in the same run directory.
 
-The existing `--html=reports/report.html --self-contained-html` output remains available for the detailed pytest report. `--dashboard=reports/my-run.html` changes the new dashboard path. Reports overwrite the previous file at the same path; archive important runs before rerunning. Add new scenario descriptions to `SCENARIOS` in `reporting/dashboard.py`. Configured test email/password values are redacted from dashboard text; images and the separate pytest report are not automatically redacted.
-
-### KPI layout
-
-The overview uses a compact two-column dashboard: outcome counts by function, stacked status bars, longest scenario times, pass share, and average duration by function. Durations include setup and cleanup; skipped/not-run scenarios are excluded from duration averages and attempted-scenario pass share. Charts always describe the whole selected run; filters affect scenario details only. Severity, confirmed defects and weekly trends are not inferred from test failures.
+Configured email/password values are redacted from dashboard text. Images and the optional pytest-html report are not automatically redacted.

@@ -12,10 +12,11 @@ Logout belongs to the T002 lifecycle. T009 is password reset request, as the cur
 
 Each case has three scenarios. Each browser session is fresh; positive authentication/reset cases prepare a dedicated synthetic account through their own fixture. No test depends on another test having run first. The positive reset case makes one request; email delivery and completing the password reset are outside scope.
 
-For another full Member 1 run, select all three files and use a new archive directory:
+For another full Aditya run, select all three files. A new dated output directory is created automatically:
 
 ```bash
-python -m pytest tests/test_registration.py tests/test_login.py tests/test_password_reset.py --allow-account-creation --headless --screenshots=all --evidence-dir=reports/member1-new --dashboard=reports/member1-new/overview.html --html=reports/member1-new/report.html --self-contained-html --junitxml=reports/member1-new/results.xml
+python -m pytest tests/test_registration.py tests/test_login.py tests/test_password_reset.py --allow-account-creation --headless --screenshots=all
+open reports/latest.html
 ```
 
-Without `--allow-account-creation`, the three positive scenarios are skipped, never counted as passes. Negative scenarios do not require a registered account. Keep original evidence before retests. The case documents record actual outcomes, source links/screenshots, environment metadata, independent expected results and AI assistance. Group prerequisite sign-off, Section 6 consolidation (#6), individual source submission (#10) and final assignment submission remain group/member actions.
+Without `--allow-account-creation`, the three positive scenarios are skipped, never counted as passes. Negative scenarios do not require a registered account. Earlier default run folders are preserved under `reports/runs/`; reviewed assignment archives remain in `evidence/`. The case documents record actual outcomes, source links/screenshots, environment metadata, independent expected results and AI assistance. Group prerequisite sign-off, Section 6 consolidation (#6), individual source submission (#10) and final assignment submission remain group/member actions.

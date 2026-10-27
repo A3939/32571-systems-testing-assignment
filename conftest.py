@@ -12,6 +12,7 @@ from dotenv import load_dotenv
 from selenium import webdriver
 
 from pages.account_page import AccountPage, RegistrationPage
+from reporting.output import configure_report_paths
 
 load_dotenv(Path(__file__).parent / ".env")
 
@@ -24,7 +25,12 @@ def pytest_addoption(parser):
     parser.addoption("--base-url", default=os.getenv("BASE_URL", "https://opencart.abstracta.us"))
     parser.addoption("--allow-account-creation", action="store_true")
     parser.addoption("--screenshots", choices=["failed", "all", "none"], default="failed")
-    parser.addoption("--evidence-dir", default="reports", help="Directory for scenario screenshots")
+    parser.addoption("--evidence-dir", help="Run directory for screenshots and the default report")
+
+
+@pytest.hookimpl(tryfirst=True)
+def pytest_configure(config):
+    configure_report_paths(config)
 
 
 def pytest_collection_modifyitems(config, items):

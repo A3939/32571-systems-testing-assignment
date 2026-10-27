@@ -10,6 +10,7 @@ import time
 
 import pytest
 from reporting.kpi import panels, CSS
+from reporting.output import write_latest_report
 
 SCENARIOS = {
     "test_t001_s01_valid_registration": ("Registration", "T001 · S01", "Register with valid details", "The success route shows the account-created confirmation and authenticated sidebar."),
@@ -38,7 +39,7 @@ def clean(value):
 
 
 def pytest_addoption(parser):
-    parser.addoption("--dashboard", default="reports/overview.html", help="Readable report output path")
+    parser.addoption("--dashboard", help="Report entry page (default: a new folder under reports/runs)")
 
 
 def pytest_configure(config):
@@ -163,6 +164,7 @@ def pytest_sessionfinish(session, exitstatus):
     path = Path(session.config.getoption("--dashboard"))
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(render(rows, metadata, _collection_issues), encoding="utf-8")
+    write_latest_report(session.config, path)
     _collection_issues.clear()
 
 
