@@ -1,6 +1,6 @@
 # Test plan
 
-Target: https://opencart.abstracta.us/. Aditya (Member 1 / A3939) owns F01/T001 registration (#11), F02/T002 authentication including logout (#12), and F09/T009 password reset request (#19). This plan states expected behaviour; actual results live in the individual case documents. Search remains Member 2 work (PR #24). The [Member 1 index](member-1-test-cases.md) links completed case tables and evidence.
+Target: https://opencart.abstracta.us/. Aditya (Member 1 / A3939) owns F01/T001 registration (#11), F02/T002 authentication including logout (#12), and F09/T009 password reset request (#19). This plan states expected behaviour; actual results live in the individual case documents. Search remains Member 2 work (PR #24). The [Aditya’s case index](aditya-test-cases.md) links completed case tables and evidence.
 
 | Function / case | Scenario | Expected result |
 | --- | --- | --- |

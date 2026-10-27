@@ -59,7 +59,7 @@ Account creation is skipped unless explicitly enabled because it creates a new p
 - `docs/t001-registration.md`: registration case table, real results and linked evidence.
 - `docs/t002-authentication.md`: login/logout lifecycle and rejection cases.
 - `docs/t009-password-reset.md`: password reset request UI cases.
-- `docs/member-1-test-cases.md`: your three cases and a combined run command.
+- `docs/aditya-test-cases.md`: your three cases and a combined run command.
 - `evidence/`: reviewed, archived OpenCart runs; choose a new folder for each rerun.
 - `reports/`: generated HTML, JUnit XML and PNG evidence (gitignored).
 
