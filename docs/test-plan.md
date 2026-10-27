@@ -13,7 +13,6 @@ Target: https://opencart.abstracta.us/. Aditya (Member 1 / A3939) owns F01/T001 
 | F03 Search / T003 | S01 iPhone | Matching product title |
 | F03 Search / T003 | S02 MacBook | Matching product title |
 | F03 Search / T003 | S03 Unique nonexistent term | No-result message and no cards |
-
 | F09 Password reset request / T009 | S01 Dedicated registered email | Confirmation on login route; request UI only |
 | F09 Password reset request / T009 | S02 Unknown synthetic email | Documented unknown-email warning; no success |
 | F09 Password reset request / T009 | S03 Empty email | Request rejection; no success |

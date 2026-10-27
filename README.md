@@ -46,13 +46,13 @@ Run evidence into a fresh folder, for example:
 python -m pytest tests/test_registration.py --allow-account-creation --headless --screenshots=all --evidence-dir=reports/t001-new --dashboard=reports/t001-new/overview.html --html=reports/t001-new/report.html --self-contained-html --junitxml=reports/t001-new/results.xml
 ```
 
-Account creation is skipped unless explicitly enabled because it creates a new persistent demo account every run. Tests use synthetic data. The authentication lifecycle and positive password-reset case each prepare their own unique synthetic account and logs out during setup. Enable them with `--allow-account-creation`; it needs no `.env` credentials and never depends on a registration test running first. Each test has a fresh browser.
+Account creation is skipped unless explicitly enabled because it creates a new persistent demo account every run. Tests use synthetic data. The authentication lifecycle and positive password-reset case each prepare a unique synthetic account and log out during setup. Enable them with `--allow-account-creation`; they need no `.env` credentials and never depend on a registration test running first. Each test has a fresh browser.
 
 `--base-url` overrides `BASE_URL` from `.env` for a compatible deployment. Default: https://opencart.abstracta.us . Browser sessions are fresh for each test and closed afterwards. Explicit waits handle page updates; no fixed sleeps.
 
 ## Structure
 
-- `conftest.py`: browser fixtures, options, credentials, screenshot hook.
+- `conftest.py`: browser fixtures, options, isolated account setup and screenshot hook.
 - `pages/`: reusable selectors and page actions.
 - `tests/`: assertions, test data and scenario IDs.
 - `docs/test-plan.md`: scenario allocation, dependencies and reporting guidance.
