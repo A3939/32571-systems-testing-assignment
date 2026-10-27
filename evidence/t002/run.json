@@ -1,0 +1,15 @@
+{
+  "captured_utc": "2026-10-27T04:40:12.404238+00:00",
+  "target": "https://opencart.abstracta.us",
+  "tester": "Aditya Girishkumar Patel / 25723634 / A3939",
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "python": "3.12.14",
+  "source_base_commit": "cb451e059d5e7e4dea306c727ae9cb94021ba5ab",
+  "source_sha256": {
+    "tests/test_login.py": "f8484965dc24d34aadd6f4bfb66fe8c2df23f4cac64caaf9a2efa392b1056496",
+    "pages/account_page.py": "0f030cbd1f5680e74f0ea90449b7d3f4595ec2d319c499819a5b458a21615662",
+    "conftest.py": "4035c77abe611921348ed6b4d422c5ec33bab8fc95f1e759acb2b52e0293ed36"
+  },
+  "browser": "156.0.8078.48",
+  "driver": "156.0.8078.47 (1d17a2e2ee147bb7d6ae2ab6abdb3a2510c17775-refs/branch-heads/8078@{#1313})"
+}

@@ -36,7 +36,7 @@ python -m pytest -m search
 python -m pytest --headless --html=reports/report.html --self-contained-html --junitxml=reports/results.xml
 python -m pytest --browser firefox --headless
 python -m pytest -m registration --allow-account-creation
-python -m pytest tests/test_login.py --screenshots=all
+python -m pytest tests/test_login.py --allow-account-creation --headless --screenshots=all
 ```
 
 Run evidence into a fresh folder, for example:
@@ -45,7 +45,7 @@ Run evidence into a fresh folder, for example:
 python -m pytest tests/test_registration.py --allow-account-creation --headless --screenshots=all --evidence-dir=reports/t001-new --dashboard=reports/t001-new/overview.html --html=reports/t001-new/report.html --self-contained-html --junitxml=reports/t001-new/results.xml
 ```
 
-Account creation is skipped unless explicitly enabled because it creates a new persistent demo account every run. Tests use synthetic data. Successful login is skipped until you put a dedicated, already registered test account in `TEST_EMAIL` and `TEST_PASSWORD` in `.env`. No test depends on another test running first. Credentials are never committed. Registration-generated disposable addresses are not reused as the login fixture.
+Account creation is skipped unless explicitly enabled because it creates a new persistent demo account every run. Tests use synthetic data. The authentication lifecycle prepares its own unique synthetic account and logs out during setup. Enable it with `--allow-account-creation`; it needs no `.env` credentials and never depends on a registration test running first. Each test has a fresh browser.
 
 `--base-url` overrides `BASE_URL` from `.env` for a compatible deployment. Default: https://opencart.abstracta.us . Browser sessions are fresh for each test and closed afterwards. Explicit waits handle page updates; no fixed sleeps.
 
@@ -56,6 +56,7 @@ Account creation is skipped unless explicitly enabled because it creates a new p
 - `tests/`: assertions, test data and scenario IDs.
 - `docs/test-plan.md`: scenario allocation, dependencies and reporting guidance.
 - `docs/t001-registration.md`: registration case table, real results and linked evidence.
+- `docs/t002-authentication.md`: login/logout lifecycle and rejection cases.
 - `evidence/`: reviewed, archived OpenCart runs; choose a new folder for each rerun.
 - `docs/test-case-template.md`: copy for each member/function.
 - `reports/`: generated HTML, JUnit XML and PNG evidence (gitignored).

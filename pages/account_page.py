@@ -42,3 +42,13 @@ class LoginPage(BasePage):
             return " | ".join(messages) if messages else False
 
         return self.wait.until(outcome, "Login produced neither an account page nor a visible error")
+
+
+class AccountPage(BasePage):
+    LOGOUT_LINK = 'a.list-group-item[href*="route=account/logout"]'
+
+    def open(self):
+        return self.open_route("account/account")
+
+    def logout(self):
+        self.click(self.LOGOUT_LINK)

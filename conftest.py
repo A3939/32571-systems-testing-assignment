@@ -1,13 +1,17 @@
 import hashlib
 import json
 import os
+import secrets
 from datetime import datetime, timezone
 from pathlib import Path
 import warnings
+from uuid import uuid4
 
 import pytest
 from dotenv import load_dotenv
 from selenium import webdriver
+
+from pages.account_page import AccountPage, RegistrationPage
 
 load_dotenv(Path(__file__).parent / ".env")
 
@@ -53,11 +57,35 @@ def driver(request):
 
 
 @pytest.fixture
-def credentials():
-    email, password = os.getenv("TEST_EMAIL"), os.getenv("TEST_PASSWORD")
-    if not email or not password:
-        pytest.skip("Set TEST_EMAIL and TEST_PASSWORD in .env for a registered demo account")
+def registered_account(request, driver, base_url):
+    """Prepare a dedicated account without relying on any other test's run."""
+    if not request.config.getoption("--allow-account-creation"):
+        pytest.skip("Use --allow-account-creation to prepare a dedicated synthetic account")
+    email, password = f"uts-{uuid4().hex}@example.com", secrets.token_urlsafe(12)
+    page = RegistrationPage(driver, base_url).open()
+    page.complete(email, password=password)
+    page.accept_policy()
+    page.submit()
+    page.expect_text("#content", "Congratulations! Your new account has been successfully created!")
+    assert page.current_route() == "account/success", "Account prerequisite did not reach success"
+    AccountPage(driver, base_url).logout()
+    page.expect_text("#content", "You have been logged off your account.")
+    assert page.current_route() == "account/logout", "Account prerequisite did not log out"
     return email, password
+
+
+@pytest.fixture
+def checkpoint(request, driver):
+    """Capture intermediate lifecycle states when all evidence is requested."""
+    def capture(step):
+        if request.config.getoption("--screenshots") != "all":
+            return
+        directory = Path(request.config.getoption("--evidence-dir")) / "steps"
+        directory.mkdir(parents=True, exist_ok=True)
+        path = directory / f"{request.node.name}-{step}.png"
+        driver.save_screenshot(str(path))
+        request.node.user_properties.append((f"step_{step}", driver.current_url))
+    return capture
 
 
 @pytest.hookimpl(hookwrapper=True)
