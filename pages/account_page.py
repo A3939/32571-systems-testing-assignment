@@ -1,5 +1,4 @@
 from selenium.webdriver.common.by import By
-
 from pages.base_page import BasePage
 
 
@@ -8,21 +7,17 @@ class RegistrationPage(BasePage):
         return self.open_route("account/register")
 
     def complete(self, email, password="Study!Pass123", confirm=None):
-        values = {
-            "firstname": "Study",
-            "lastname": "Tester",
-            "email": email,
-            "telephone": "0412345678",
-            "password": password,
-            "confirm": password if confirm is None else confirm,
-        }
+        values = {"firstname": "Study", "lastname": "Tester", "email": email,
+                  "telephone": "0412345678", "password": password,
+                  "confirm": password if confirm is None else confirm}
         for name, value in values.items():
             self.fill(f"#input-{name}", value)
         return self
 
     def accept_policy(self):
-        # The native checkbox is styled/hidden; use its visible label.
-        self.click('label[for="input-agree"]')
+        checkbox = self.visible('input[name="agree"]')
+        if not checkbox.is_selected():
+            checkbox.click()
 
     def submit(self):
         self.click('#content input[type="submit"]')
@@ -50,7 +45,6 @@ class LoginPage(BasePage):
 
 
 class AccountPage(BasePage):
-    # Target the sidebar link; a matching menu link may be hidden.
     LOGOUT_LINK = 'a.list-group-item[href*="route=account/logout"]'
 
     def open(self):

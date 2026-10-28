@@ -1,0 +1,6 @@
+{
+  "screenshot": "evidence/t009/screenshots/20261027T044148186888-e2d5e9f9e3.png",
+  "observed_url": "https://opencart.abstracta.us/index.php?route=account/forgotten",
+  "observed_heading": "Account",
+  "observed_alert": "Warning: The E-Mail Address was not found in our records, please try again!"
+}

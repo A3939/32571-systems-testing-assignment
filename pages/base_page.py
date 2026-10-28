@@ -15,11 +15,11 @@ class BasePage:
         self.driver.get(f"{self.base_url}/index.php?route={route}")
         return self
 
-    def current_route(self):
-        return parse_qs(urlparse(self.driver.current_url).query).get("route", [""])[0]
-
     def visible(self, selector):
         return self.wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, selector)))
+
+    def current_route(self):
+        return parse_qs(urlparse(self.driver.current_url).query).get("route", [""])[0]
 
     def fill(self, selector, value):
         field = self.visible(selector)
