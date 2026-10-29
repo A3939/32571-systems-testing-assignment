@@ -1,0 +1,16 @@
+{
+  "captured_utc": "2026-10-29T11:46:22.501523+00:00",
+  "target": "https://opencart.abstracta.us",
+  "tester": "Wanchai Sangkusolwong / 25654120 / wanchaiS",
+  "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "python": "3.13.15",
+  "source_base_commit": "9747bcab4202f241e3d6cfd14b8c81653bc065a6",
+  "source_sha256": {
+    "tests/test_add_to_cart.py": "3585529b43a9cc5edc1f0eb3e759e1032b009353bd10bb0cee7d6b7b65f9c02c",
+    "pages/cart_page.py": "6089830f24e654506bc8151eb61e6b9f0464caf86590568ac0eb4f07177c1453",
+    "pages/base_page.py": "4fd40a989d554f145411448741e596e2fc003383e043d1ed3c0352e1efe881d7",
+    "conftest.py": "960aabbc5083a46bacb728b3e3203361c3a786936ed1f028b90e0a985045e3c0"
+  },
+  "browser": "156.0.8078.48",
+  "driver": "156.0.8078.73 (2f9a11097447f226133bc1a31c787291a5eeab98-refs/branch-heads/8078@{#1612})"
+}

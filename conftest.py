@@ -12,6 +12,7 @@ from dotenv import load_dotenv
 from selenium import webdriver
 
 from pages.account_page import AccountPage, RegistrationPage
+from pages.cart_page import IPOD_CLASSIC, CartPage, ProductPurchasePage, added_message
 from reporting.output import configure_report_paths
 
 load_dotenv(Path(__file__).parent / ".env")
@@ -78,6 +79,16 @@ def registered_account(request, driver, base_url):
     page.expect_text("#content", "You have been logged off your account.")
     assert page.current_route() == "account/logout", "Account prerequisite did not log out"
     return email, password
+
+
+@pytest.fixture
+def ipod_in_cart(driver, base_url):
+    """Start from a cart holding one iPod Classic, added through the T005 add-to-cart flow."""
+    product = ProductPurchasePage(driver, base_url).open(IPOD_CLASSIC.product_id)
+    message = product.add_to_cart()
+    assert message == added_message(IPOD_CLASSIC), f"Cart prerequisite was not added: {message}"
+    product.expect_text("#cart-total", f"1 item(s) - {IPOD_CLASSIC.price}")
+    return CartPage(driver, base_url).open()
 
 
 @pytest.fixture
