@@ -11,7 +11,7 @@ import pytest
 from dotenv import load_dotenv
 from selenium import webdriver
 
-from pages.account_page import AccountPage, RegistrationPage
+from pages.account_page import AccountPage, LoginPage, RegistrationPage
 from reporting.output import configure_report_paths
 
 load_dotenv(Path(__file__).parent / ".env")
@@ -20,7 +20,7 @@ pytest_plugins = ["reporting.dashboard"]
 
 
 def pytest_addoption(parser):
-    parser.addoption("--browser", choices=["chrome", "firefox"], default="chrome")
+    parser.addoption("--browser", choices=["chrome", "firefox", "edge"], default="chrome")
     parser.addoption("--headless", action="store_true")
     parser.addoption("--base-url", default=os.getenv("BASE_URL", "https://opencart.abstracta.us"))
     parser.addoption("--allow-account-creation", action="store_true")
@@ -48,10 +48,11 @@ def base_url(request):
 @pytest.fixture
 def driver(request):
     browser = request.config.getoption("--browser")
-    options = webdriver.ChromeOptions() if browser == "chrome" else webdriver.FirefoxOptions()
+    options = {"chrome": webdriver.ChromeOptions, "edge": webdriver.EdgeOptions,
+               "firefox": webdriver.FirefoxOptions}[browser]()
     if request.config.getoption("--headless"):
-        options.add_argument("--headless=new" if browser == "chrome" else "-headless")
-    factory = webdriver.Chrome if browser == "chrome" else webdriver.Firefox
+        options.add_argument("-headless" if browser == "firefox" else "--headless=new")
+    factory = {"chrome": webdriver.Chrome, "edge": webdriver.Edge, "firefox": webdriver.Firefox}[browser]
     instance = factory(options=options)
     request.node._browser = instance
     try:
@@ -78,6 +79,16 @@ def registered_account(request, driver, base_url):
     page.expect_text("#content", "You have been logged off your account.")
     assert page.current_route() == "account/logout", "Account prerequisite did not log out"
     return email, password
+
+
+@pytest.fixture
+def logged_in_account(registered_account, driver, base_url):
+    """Member 4: a fresh synthetic account, logged in through the verified F02 login flow."""
+    page = LoginPage(driver, base_url).open()
+    page.login(*registered_account)
+    assert page.login_result() == "authenticated", "Login prerequisite (F02) failed"
+    page.visible(AccountPage.LOGOUT_LINK)
+    return registered_account
 
 
 @pytest.fixture
