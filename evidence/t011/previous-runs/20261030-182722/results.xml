@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="3" time="56.153" timestamp="2026-10-30T18:21:00.182777+11:00" hostname="Fluke-Gram"><testcase classname="tests.test_edit_account" name="test_t011_s01_update_name_and_telephone" time="14.943"><properties><property name="step_before" value="https://opencart.abstracta.us/index.php?route=account/edit" /><property name="step_success" value="https://opencart.abstracta.us/index.php?route=account/account" /><property name="screenshot" value="evidence\t011\screenshots\20261030T072112937563-29dff27521.png" /><property name="observed_url" value="https://opencart.abstracta.us/index.php?route=account/edit" /><property name="observed_heading" value="Account" /><property name="observed_alert" value="" /></properties></testcase><testcase classname="tests.test_edit_account" name="test_t011_s02_empty_first_name_rejected" time="13.002"><properties><property name="step_validation" value="https://opencart.abstracta.us/index.php?route=account/edit" /><property name="screenshot" value="evidence\t011\screenshots\20261030T072126285589-f910a3ca78.png" /><property name="observed_url" value="https://opencart.abstracta.us/index.php?route=account/edit" /><property name="observed_heading" value="Account" /><property name="observed_alert" value="" /></properties></testcase><testcase classname="tests.test_edit_account" name="test_t011_s03_invalid_email_rejected" time="27.155"><properties><property name="screenshot" value="evidence\t011\screenshots\20261030T072153582681-7f7566c5e5.png" /><property name="observed_url" value="https://opencart.abstracta.us/index.php?route=account/edit" /><property name="observed_heading" value="Account" /><property name="observed_alert" value="" /></properties><failure message="selenium.common.exceptions.TimeoutException: Message: No field validation message appeared">logged_in_account = ('uts-cd685b9d08bc4e63ae2201e0f0226070@example.com', 'j3JqTmPkRrm3X_m2')
+driver = &lt;selenium.webdriver.edge.webdriver.WebDriver (session="11d19ff0976b0e16d31d819cf8ce261b")&gt;
+base_url = 'https://opencart.abstracta.us', checkpoint = &lt;function checkpoint.&lt;locals&gt;.capture at 0x000001B834FE62A0&gt;
+
+    def test_t011_s03_invalid_email_rejected(logged_in_account, driver, base_url, checkpoint):
+        email = logged_in_account[0]
+        page = EditAccountPage(driver, base_url).open()
+        page.update(email=f"member4-{uuid4().hex[:8]}@")
+&gt;       errors = page.wait_for_errors()
+                 ^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_edit_account.py:52: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+pages\member4_account_pages.py:98: in wait_for_errors
+    return self.wait.until(lambda d: self.field_errors() or False, "No field validation message appeared")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;selenium.webdriver.support.wait.WebDriverWait (session="11d19ff0976b0e16d31d819cf8ce261b")&gt;
+method = &lt;function EditAccountPage.wait_for_errors.&lt;locals&gt;.&lt;lambda&gt; at 0x000001B837DA25C0&gt;
+message = 'No field validation message appeared'
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -&gt; T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            &gt;&gt;&gt; from selenium.webdriver.common.by import By
+            &gt;&gt;&gt; from selenium.webdriver.support.wait import WebDriverWait
+            &gt;&gt;&gt; from selenium.webdriver.support import expected_conditions as EC
+            &gt;&gt;&gt;
+            &gt;&gt;&gt; # Wait until an element is visible on the page
+            &gt;&gt;&gt; wait = WebDriverWait(driver, 10)
+            &gt;&gt;&gt; element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            &gt;&gt;&gt; print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() &gt; end_time:
+                break
+            time.sleep(self._poll)
+&gt;       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: No field validation message appeared
+
+.venv\Lib\site-packages\selenium\webdriver\support\wait.py:121: TimeoutException</failure></testcase></testsuite></testsuites>

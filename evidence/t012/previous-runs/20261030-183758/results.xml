@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="3" time="51.899" timestamp="2026-10-30T18:33:31.515202+11:00" hostname="Fluke-Gram"><testcase classname="tests.test_address_book" name="test_t012_s01_add_valid_address" time="15.802"><properties><property name="step_filled" value="https://opencart.abstracta.us/index.php?route=account/address/add" /><property name="screenshot" value="evidence\t012\screenshots\20261030T073345248293-359b503cbc.png" /><property name="observed_url" value="https://opencart.abstracta.us/index.php?route=account/address" /><property name="observed_heading" value="" /><property name="observed_alert" value="Your address has been successfully added" /></properties></testcase><testcase classname="tests.test_address_book" name="test_t012_s02_missing_mandatory_fields" time="15.515"><properties><property name="step_validation" value="https://opencart.abstracta.us/index.php?route=account/address/add" /><property name="screenshot" value="evidence\t012\screenshots\20261030T073401013156-7378a369c3.png" /><property name="observed_url" value="https://opencart.abstracta.us/index.php?route=account/address" /><property name="observed_heading" value="" /><property name="observed_alert" value="" /></properties></testcase><testcase classname="tests.test_address_book" name="test_t012_s03_edit_then_delete_address" time="19.691"><properties><property name="step_two-addresses" value="https://opencart.abstracta.us/index.php?route=account/address" /><property name="screenshot" value="evidence\t012\screenshots\20261030T073420962197-18d6fdea0c.png" /><property name="observed_url" value="https://opencart.abstracta.us/index.php?route=account/address/edit&amp;address_id=34758" /><property name="observed_heading" value="" /><property name="observed_alert" value="" /></properties><failure message="selenium.common.exceptions.NoSuchElementException: Message: No options are selected; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception">logged_in_account = ('uts-954aa80631e0419aa258ebb36b1089c6@example.com', 'gMbCmDNa9vmyPF_F')
+driver = &lt;selenium.webdriver.edge.webdriver.WebDriver (session="6a8aabdc0a3cadbaab73b1080a4e828b")&gt;
+base_url = 'https://opencart.abstracta.us', checkpoint = &lt;function checkpoint.&lt;locals&gt;.capture at 0x000001303D6462A0&gt;
+
+    def test_t012_s03_edit_then_delete_address(logged_in_account, driver, base_url, checkpoint):
+        add_address(driver, base_url, HOME, default=True)
+        book = add_address(driver, base_url, WORK, default=False)
+        assert len(book.entries()) == 2
+        checkpoint("two-addresses")
+    
+        book.click_edit("81 Broadway")
+        form = AddressFormPage(driver, base_url)
+        assert form.value("address-1") == "81 Broadway"
+        # The edit form must show the saved values. Problems are collected so the edit and
+        # delete steps are still exercised, then reported together at the end.
+        problems = []
+&gt;       prefilled = (form.selected("country"), form.selected("zone"))
+                                               ^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_address_book.py:80: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+pages\member4_account_pages.py:193: in selected
+    return Select(self.visible(f"#input-{name}")).first_selected_option.text.strip()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;selenium.webdriver.support.select.Select object at 0x0000013040873310&gt;
+
+    @property
+    def first_selected_option(self) -&gt; WebElement:
+        """Return the first selected option or the currently selected option."""
+        for opt in self.options:
+            if opt.is_selected():
+                return opt
+&gt;       raise NoSuchElementException("No options are selected")
+E       selenium.common.exceptions.NoSuchElementException: Message: No options are selected; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+
+.venv\Lib\site-packages\selenium\webdriver\support\select.py:60: NoSuchElementException</failure></testcase></testsuite></testsuites>

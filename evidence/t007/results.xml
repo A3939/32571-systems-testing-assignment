@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="3" time="66.332" timestamp="2026-10-30T18:36:07.497494+11:00" hostname="Fluke-Gram"><testcase classname="tests.test_wishlist" name="test_t007_s01_add_product_to_wishlist" time="16.406"><properties><property name="step_added-alert" value="https://opencart.abstracta.us/index.php?route=product/product&amp;product_id=40" /><property name="screenshot" value="evidence\t007\screenshots\20261030T073621817000-8934689b1c.png" /><property name="observed_url" value="https://opencart.abstracta.us/index.php?route=account/wishlist" /><property name="observed_heading" value="" /><property name="observed_alert" value="" /></properties></testcase><testcase classname="tests.test_wishlist" name="test_t007_s02_wishlist_persists_after_logout" time="29.999"><properties><property name="step_two-added" value="https://opencart.abstracta.us/index.php?route=product/product&amp;product_id=43" /><property name="step_logged-out-redirect" value="https://opencart.abstracta.us/index.php?route=account/login" /><property name="screenshot" value="evidence\t007\screenshots\20261030T073651818913-c4fd2ff4b3.png" /><property name="observed_url" value="https://opencart.abstracta.us/index.php?route=account/wishlist" /><property name="observed_heading" value="" /><property name="observed_alert" value="" /></properties></testcase><testcase classname="tests.test_wishlist" name="test_t007_s03_remove_products_from_wishlist" time="19.189"><properties><property name="step_before-remove" value="https://opencart.abstracta.us/index.php?route=account/wishlist" /><property name="step_one-removed" value="https://opencart.abstracta.us/index.php?route=account/wishlist" /><property name="screenshot" value="evidence\t007\screenshots\20261030T073711431108-f6e1f2f2ca.png" /><property name="observed_url" value="https://opencart.abstracta.us/index.php?route=account/wishlist" /><property name="observed_heading" value="" /><property name="observed_alert" value="Success: You have modified your wish list!&#10;×" /></properties><failure message="AssertionError: assert 'Your wish list is empty.' in 'Account\nYour shopping cart is empty!\nContinue'&#10; +  where 'Account\nYour shopping cart is empty!\nContinue' = content_text()&#10; +    where content_text = &lt;pages.member4_account_pages.WishListPage object at 0x00000120B1405810&gt;.content_text">logged_in_account = ('uts-fc0e8ff0796143bba2e7c8a571bf22af@example.com', '85r7dItl-z7jN0b5')
+driver = &lt;selenium.webdriver.edge.webdriver.WebDriver (session="2e0eb21a60f036e8042204cb83853324")&gt;
+base_url = 'https://opencart.abstracta.us', checkpoint = &lt;function checkpoint.&lt;locals&gt;.capture at 0x00000120AE6562A0&gt;
+
+    def test_t007_s03_remove_products_from_wishlist(logged_in_account, driver, base_url, checkpoint):
+        for product_id in (IPHONE, MACBOOK):
+            ProductWishPage(driver, base_url).open(product_id).add_to_wishlist()
+        wishlist = WishListPage(driver, base_url).open()
+        assert sorted(wishlist.product_names()) == ["MacBook", "iPhone"]
+        checkpoint("before-remove")
+    
+        wishlist.remove("iPhone")
+        assert "Success: You have modified your wish list!" in wishlist.success_alert()
+        assert wishlist.product_names() == ["MacBook"]
+        wishlist.expect_text("#wishlist-total", "Wish List (1)")
+        checkpoint("one-removed")
+    
+        wishlist.remove("MacBook")
+        assert "Success: You have modified your wish list!" in wishlist.success_alert()
+        assert wishlist.product_names() == []
+&gt;       assert "Your wish list is empty." in wishlist.content_text()
+E       AssertionError: assert 'Your wish list is empty.' in 'Account\nYour shopping cart is empty!\nContinue'
+E        +  where 'Account\nYour shopping cart is empty!\nContinue' = content_text()
+E        +    where content_text = &lt;pages.member4_account_pages.WishListPage object at 0x00000120B1405810&gt;.content_text
+
+tests\test_wishlist.py:78: AssertionError</failure></testcase></testsuite></testsuites>

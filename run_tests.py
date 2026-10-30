@@ -13,6 +13,12 @@ CASES = {
     "authentication": "tests/test_login.py",
     "password-reset": "tests/test_password_reset.py",
 }
+# Member 4 (Tanut): wish list, edit account, address book.
+MEMBER4_CASES = {
+    "wishlist": "tests/test_wishlist.py",
+    "edit-account": "tests/test_edit_account.py",
+    "address-book": "tests/test_address_book.py",
+}
 
 
 class RunReport:
@@ -27,9 +33,9 @@ class RunReport:
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--case", choices=["all", *CASES], default="all")
+    parser.add_argument("--case", choices=["all", "member4", *CASES, *MEMBER4_CASES], default="all")
     parser.add_argument("--headed", action="store_true", help="Show the browser during testing")
-    parser.add_argument("--browser", choices=["chrome", "firefox"], default="chrome")
+    parser.add_argument("--browser", choices=["chrome", "firefox", "edge"], default="chrome")
     parser.add_argument("--no-open", action="store_true", help="Save the report without opening it")
     args, pytest_options = parser.parse_known_args(argv)
 
@@ -40,7 +46,12 @@ def main(argv=None):
         return 4
 
     os.chdir(ROOT)
-    paths = list(CASES.values()) if args.case == "all" else [CASES[args.case]]
+    if args.case == "all":
+        paths = list(CASES.values())
+    elif args.case == "member4":
+        paths = list(MEMBER4_CASES.values())
+    else:
+        paths = [{**CASES, **MEMBER4_CASES}[args.case]]
     options = [*paths, "--allow-account-creation", "--screenshots=all", f"--browser={args.browser}"]
     if not args.headed:
         options.append("--headless")

@@ -1,0 +1,22 @@
+{
+  "captured_utc": "2026-10-30T07:33:30.271974+00:00",
+  "target": "https://opencart.abstracta.us",
+  "tester": "Tanut / 25677093 / zethio44",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "machine": "AMD64",
+  "python": "3.13.2",
+  "source_commit": "bd54898f19d777c22cc93ceec7970500c3d85b63",
+  "uncommitted_changes": false,
+  "source_sha256": {
+    "tests/test_address_book.py": "ea47d4220852b8002510b852cc444aea060ea494ca906f481ebbb2b66b1e9789",
+    "pages/member4_account_pages.py": "f686224860d43928d38f17d99fdd1a368c4e6ad9806e12b6b815c12fbe71b9c6",
+    "pages/account_page.py": "25d40100dd889333a66b71ff2d1581b4d7fa3f1fef72d8aea254d4b0ec21d5f6",
+    "pages/base_page.py": "a23a23c4b074923fcea1762c713bb37b4fb8bb5eb2fb10b17779169b89387ad3",
+    "conftest.py": "924474485dad9aede6e5b8b262f96440b2ebd5bc025581657a7ce68ba6608619"
+  },
+  "browser": "MicrosoftEdge 156.0.4314.42",
+  "driver": "156.0.4314.50 (af2ba23ae0ecf7084d900446fc59d5119dd5fd5e)",
+  "headless": true,
+  "command": "python.exe -m pytest tests/test_address_book.py --allow-account-creation --browser=edge --screenshots=all --evidence-dir=evidence/t012 --dashboard=evidence/t012/overview.html --html=evidence/t012/report.html --self-contained-html --junitxml=evidence/t012/results.xml --headless",
+  "pytest_exit_code": 1
+}

@@ -22,6 +22,15 @@ SCENARIOS = {
     "test_t009_s01_registered_email": ("Password reset", "T009 · S01", "Request reset for a registered account", "A reset-request confirmation appears on the login route; email delivery is outside scope."),
     "test_t009_s02_unregistered_email": ("Password reset", "T009 · S02", "Reject an unregistered reset email", "The documented unknown-email warning appears, with no success confirmation."),
     "test_t009_s03_empty_email": ("Password reset", "T009 · S03", "Reject an empty reset email", "The request is rejected on the forgotten-password form, without a success confirmation."),
+    "test_t007_s01_add_product_to_wishlist": ("Wish list", "T007 · S01", "Add a product to the wish list", "Success alert, header Wish List (1) and the iPhone row with model, stock and price."),
+    "test_t007_s02_wishlist_persists_after_logout": ("Wish list", "T007 · S02", "Wish list persists after logout and login", "Wish list is protected after logout; after login both products are reached from My Account."),
+    "test_t007_s03_remove_products_from_wishlist": ("Wish list", "T007 · S03", "Remove products from the wish list", "Each removal shows the modified alert; the list ends empty with Wish List (0)."),
+    "test_t011_s01_update_name_and_telephone": ("Edit account", "T011 · S01", "Update name and telephone", "Success alert on My Account; the edit form shows the saved values."),
+    "test_t011_s02_empty_first_name_rejected": ("Edit account", "T011 · S02", "Reject an empty first name", "Only the first-name message appears and saved details are unchanged."),
+    "test_t011_s03_invalid_email_rejected": ("Edit account", "T011 · S03", "Reject an invalid email", "The browser blocks the incomplete email; with that skipped the server rejects it; the saved email is unchanged."),
+    "test_t012_s01_add_valid_address": ("Address book", "T012 · S01", "Add a valid address", "Added alert; the address book lists the saved address fields."),
+    "test_t012_s02_missing_mandatory_fields": ("Address book", "T012 · S02", "Reject missing mandatory fields", "Field messages for each mandatory field; nothing is saved."),
+    "test_t012_s03_edit_then_delete_address": ("Address book", "T012 · S03", "Edit then delete an address", "The edit form keeps the saved values; updated and deleted alerts; the only remaining address cannot be deleted."),
 }
 
 

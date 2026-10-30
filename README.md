@@ -12,6 +12,16 @@ Aditya Girishkumar Patel (25723634 / GitHub `A3939`) owns these three cases, eac
 
 Search belongs to Member 2 and is excluded from the Aditya runner. Its OpenCart migration is tracked in PR #24.
 
+## Member 4 cases (Tanut, GitHub `zethio44`)
+
+| Case | Function | Issue | Details |
+| --- | --- | --- | --- |
+| T007 / F07 | Wish list | [#17](https://github.com/A3939/32571-systems-testing-assignment/issues/17) | [Member 4 test cases](docs/member4-test-cases.md) |
+| T011 / F11 | Edit account information | [#22](https://github.com/A3939/32571-systems-testing-assignment/issues/22) | [Member 4 test cases](docs/member4-test-cases.md) |
+| T012 / F12 | Address book | [#23](https://github.com/A3939/32571-systems-testing-assignment/issues/23) | [Member 4 test cases](docs/member4-test-cases.md) |
+
+Run them with `python member4_run.py --browser edge` (archives evidence per case) or `python run_tests.py --case member4`. `--browser` also accepts `edge`.
+
 ## First-time setup
 
 Install Python 3.11+ and Chrome or Firefox. From the repository folder on macOS/Linux:
