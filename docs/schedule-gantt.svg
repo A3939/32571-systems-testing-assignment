@@ -98,6 +98,6 @@
 <rect x="499" y="539" width="14" height="14" rx="3" fill="#d97706"/>
 <text x="519" y="550" font-size="12">M3: Wanchai Sangkusolwong</text>
 <rect x="704" y="539" width="14" height="14" rx="3" fill="#7c3aed"/>
-<text x="724" y="550" font-size="12">M4: Member 4</text>
+<text x="724" y="550" font-size="12">M4: Tanut Pue-on</text>
 <text x="10" y="574" font-size="12" fill="#4b5563">Arrows show test dependencies: a function is tested only after the function it relies on has passed. Shaded columns are weekends.</text>
 </svg>
