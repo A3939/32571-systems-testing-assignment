@@ -2,15 +2,18 @@
 
 Python 3.11+, Selenium 4 and pytest tests for **https://opencart.abstracta.us/**.
 
-Aditya Girishkumar Patel (25723634 / GitHub `A3939`) owns these three cases, each with three scenarios:
+Two members' cases are in this repository. Each case has three scenarios:
 
-| Case | Function | Issue | Results and assignment evidence |
-| --- | --- | --- | --- |
-| T001 / F01 | Registration | [#11](https://github.com/A3939/32571-systems-testing-assignment/issues/11) | [Registration report](docs/t001-registration.md) |
-| T002 / F02 | Authentication, including login and logout | [#12](https://github.com/A3939/32571-systems-testing-assignment/issues/12) | [Authentication report](docs/t002-authentication.md) |
-| T009 / F09 | Password reset request | [#19](https://github.com/A3939/32571-systems-testing-assignment/issues/19) | [Password reset report](docs/t009-password-reset.md) |
+| Case | Function | Owner | Issue | Results and assignment evidence |
+| --- | --- | --- | --- | --- |
+| T001 / F01 | Registration | Aditya Girishkumar Patel (25723634 / `A3939`) | [#11](https://github.com/A3939/32571-systems-testing-assignment/issues/11) | [Registration report](docs/t001-registration.md) |
+| T002 / F02 | Authentication, including login and logout | Aditya | [#12](https://github.com/A3939/32571-systems-testing-assignment/issues/12) | [Authentication report](docs/t002-authentication.md) |
+| T009 / F09 | Password reset request | Aditya | [#19](https://github.com/A3939/32571-systems-testing-assignment/issues/19) | [Password reset report](docs/t009-password-reset.md) |
+| T005 / F05 | Add product to cart | Wanchai Sangkusolwong (25654120 / `wanchaiS`) | [#15](https://github.com/A3939/32571-systems-testing-assignment/issues/15) | [Add-to-cart report](docs/t005-add-to-cart.md) |
+| T006 / F06 | Update and remove cart items | Wanchai | [#16](https://github.com/A3939/32571-systems-testing-assignment/issues/16) | [Cart update report](docs/t006-cart-update.md) |
+| T010 / F10 | Checkout form validation | Wanchai | [#21](https://github.com/A3939/32571-systems-testing-assignment/issues/21) | [Checkout validation report](docs/t010-checkout-validation.md) |
 
-Search belongs to Member 2 and is excluded from the Aditya runner. Its OpenCart migration is tracked in PR #24.
+Search belongs to Member 2 and is excluded from the runner. Its OpenCart migration is tracked in PR #24.
 
 ## First-time setup
 
@@ -54,9 +57,9 @@ py -3 run_tests.py
 
 The script:
 
-1. Runs Aditya's nine scenarios in headless Chrome.
-2. Enables creation of dedicated synthetic accounts for the positive scenarios.
-3. Captures scenario screenshots and login/logout checkpoints.
+1. Runs the eighteen scenarios above in headless Chrome.
+2. Enables creation of dedicated synthetic accounts for the positive account scenarios.
+3. Captures scenario screenshots and intermediate checkpoints.
 4. Saves the report and images in a new dated folder under `reports/runs/`.
 5. Opens that run's report in your default browser when testing finishes, including when scenarios fail.
 
@@ -69,21 +72,24 @@ Earlier runs are preserved. The script returns pytest's exit code, so failed tes
 | `python3 run_tests.py --case registration` | Run the three registration scenarios and open their report |
 | `python3 run_tests.py --case authentication` | Run the three login/logout scenarios and open their report |
 | `python3 run_tests.py --case password-reset` | Run the three reset-request scenarios and open their report |
-| `python3 run_tests.py --headed` | Watch the browser while all nine scenarios run |
+| `python3 run_tests.py --case add-to-cart` | Run the three add-to-cart scenarios and open their report |
+| `python3 run_tests.py --case cart-update` | Run the three cart update/remove scenarios and open their report |
+| `python3 run_tests.py --case checkout` | Run the three checkout-validation scenarios and open their report |
+| `python3 run_tests.py --headed` | Watch the browser while all eighteen scenarios run |
 | `python3 run_tests.py --browser firefox` | Use Firefox |
 | `python3 run_tests.py --no-open` | Run and save results without opening a browser tab |
-| `python3 run_tests.py --collect-only -q` | List the nine scenarios without executing them |
+| `python3 run_tests.py --collect-only -q` | List the eighteen scenarios without executing them |
 | `python3 run_tests.py --help` | Show script options |
 
 Extra pytest options are forwarded. For example, `python3 run_tests.py --case registration -k t001_s02` selects only the password-mismatch scenario. Replace `python3` with `py -3` in these examples on Windows.
 
-The runner enables account creation automatically. Each full run creates three disposable synthetic accounts: one for registration, one for authentication setup and one for password-reset setup. Tests do not need personal login credentials or depend on another test running first. Password-reset testing makes one request to its dedicated account; email delivery and completing the password change are outside scope.
+The runner enables account creation automatically. Each full run creates three disposable synthetic accounts: one for registration, one for authentication setup and one for password-reset setup. Tests do not need personal login credentials or depend on another test running first. Password-reset testing makes one request to its dedicated account; email delivery and completing the password change are outside scope. Cart and checkout scenarios use a fresh guest cart per browser, create no accounts and never place an order.
 
 ## Folder structure
 
 ```text
 .
-├── run_tests.py                  # Run Aditya's cases and open their report
+├── run_tests.py                  # Run the listed cases and open their report
 ├── README.md
 ├── requirements.txt             # Python dependencies
 ├── pytest.ini                   # Test discovery and markers
@@ -93,12 +99,17 @@ The runner enables account creation automatically. Each full run creates three d
 ├── pages/                       # Reusable Selenium page interactions
 │   ├── base_page.py
 │   ├── account_page.py
+│   ├── cart_page.py             # Product Add to Cart form and shopping cart
+│   ├── checkout_page.py         # Guest checkout Step 2 validation
 │   ├── password_reset_page.py
 │   └── search_page.py
 ├── tests/                       # Assignment browser tests
 │   ├── test_registration.py     # T001: three scenarios
 │   ├── test_login.py            # T002: three scenarios, including logout
 │   ├── test_password_reset.py   # T009: three request-UI scenarios
+│   ├── test_add_to_cart.py      # T005: three scenarios
+│   ├── test_cart_update.py      # T006: three scenarios
+│   ├── test_checkout.py         # T010: three scenarios, no order placed
 │   └── test_search.py           # Member 2's scenarios
 ├── reporting/                   # Code and assets that generate reports
 │   ├── dashboard.py             # Collect pytest outcomes and timings
@@ -108,10 +119,14 @@ The runner enables account creation automatically. Each full run creates three d
 │   └── assets/                 # Report CSS and JavaScript
 ├── docs/                        # Written assignment cases and test plan
 │   ├── aditya-test-cases.md
+│   ├── wanchai-test-cases.md
 │   ├── test-plan.md
 │   ├── t001-registration.md
 │   ├── t002-authentication.md
-│   └── t009-password-reset.md
+│   ├── t005-add-to-cart.md
+│   ├── t006-cart-update.md
+│   ├── t009-password-reset.md
+│   └── t010-checkout-validation.md
 ├── reports/                     # Generated local results; excluded from Git
 │   ├── latest.html              # Shortcut to the newest default run
 │   └── runs/
@@ -120,11 +135,14 @@ The runner enables account creation automatically. Each full run creates three d
 │           ├── overview-pages/ # Required companion pages and shared assets
 │           ├── overview-report.zip
 │           ├── screenshots/    # Scenario images and observation JSON
-│           └── steps/          # Login/logout checkpoint images
+│           └── steps/          # Checkpoint images
 └── evidence/                    # Reviewed assignment archives committed to Git
     ├── t001/
     ├── t002/
-    └── t009/
+    ├── t005/
+    ├── t006/
+    ├── t009/
+    └── t010/
 ```
 
 Python package folders also contain `__init__.py` files. `.venv/` holds the local Python environment and is excluded from Git.

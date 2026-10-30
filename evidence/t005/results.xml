@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="3" time="21.683" timestamp="2026-10-29T22:44:51.445731+11:00" hostname="Wanchais-MacBook-Pro"><testcase classname="tests.test_add_to_cart" name="test_t005_s01_add_simple_product" time="6.760"><properties><property name="step_added" value="https://opencart.abstracta.us/index.php?route=product/product&amp;product_id=48" /><property name="screenshot" value="evidence/t005/screenshots/20261029T114458128346-606cf23435.png" /><property name="observed_url" value="https://opencart.abstracta.us/index.php?route=checkout/cart" /><property name="observed_heading" value="Use Gift Certificate  (1.00kg)" /><property name="observed_alert" value="" /></properties></testcase><testcase classname="tests.test_add_to_cart" name="test_t005_s02_required_option" time="7.241"><properties><property name="step_option-required" value="https://opencart.abstracta.us/index.php?route=product/product&amp;product_id=30" /><property name="screenshot" value="evidence/t005/screenshots/20261029T114505558118-c1fcbe8ad4.png" /><property name="observed_url" value="https://opencart.abstracta.us/index.php?route=checkout/cart" /><property name="observed_heading" value="Use Gift Certificate  (0.00kg)" /><property name="observed_alert" value="" /></properties></testcase><testcase classname="tests.test_add_to_cart" name="test_t005_s03_zero_quantity" time="7.166"><properties><property name="step_add-response" value="https://opencart.abstracta.us/index.php?route=product/product&amp;product_id=48" /><property name="screenshot" value="evidence/t005/screenshots/20261029T114512880250-b04eddd410.png" /><property name="observed_url" value="https://opencart.abstracta.us/index.php?route=checkout/cart" /><property name="observed_heading" value="Shopping Cart" /><property name="observed_alert" value="" /></properties><failure message="AssertionError: Quantity 0 added nothing, but the product page confirmed: 'Success: You have added iPod Classic to your shopping cart!'&#10;assert not True&#10; +  where True = &lt;built-in method startswith of str object at 0x10928f9f0&gt;('Success')&#10; +    where &lt;built-in method startswith of str object at 0x10928f9f0&gt; = 'Success: You have added iPod Classic to your shopping cart!'.startswith">driver = &lt;selenium.webdriver.chrome.webdriver.WebDriver (session="042ba53c4e7365dad140aac652141dc5")&gt;
+base_url = 'https://opencart.abstracta.us'
+checkpoint = &lt;function checkpoint.&lt;locals&gt;.capture at 0x1092e6020&gt;
+
+    def test_t005_s03_zero_quantity(driver, base_url, checkpoint):
+        product = ProductPurchasePage(driver, base_url).open(IPOD_CLASSIC.product_id)
+        product.set_quantity(0)
+        message = product.add_to_cart()
+        checkpoint("add-response")
+    
+        cart = CartPage(driver, base_url).open()
+        cart.expect_text("#content", CartPage.EMPTY)
+        assert cart.cart_total() == EMPTY_HEADER
+&gt;       assert not message.startswith("Success"), (
+            f"Quantity 0 added nothing, but the product page confirmed: {message!r}")
+E       AssertionError: Quantity 0 added nothing, but the product page confirmed: 'Success: You have added iPod Classic to your shopping cart!'
+E       assert not True
+E        +  where True = &lt;built-in method startswith of str object at 0x10928f9f0&gt;('Success')
+E        +    where &lt;built-in method startswith of str object at 0x10928f9f0&gt; = 'Success: You have added iPod Classic to your shopping cart!'.startswith
+
+tests/test_add_to_cart.py:51: AssertionError</failure></testcase></testsuite></testsuites>

@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1132" height="610" font-family="Helvetica,Arial,sans-serif">
+<rect width="1132" height="610" fill="#fff"/>
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker></defs>
+<text x="10" y="24" font-size="17" font-weight="600">Section 4 — Test schedule (planned bars; ◆ = actual execution date)</text>
+<rect x="330" y="48" width="46" height="472" fill="#fff" stroke="#e5e7eb"/>
+<text x="353.0" y="63" font-size="12" text-anchor="middle">16 Oct</text>
+<rect x="376" y="48" width="46" height="472" fill="#f3f4f6" stroke="#e5e7eb"/>
+<text x="399.0" y="63" font-size="12" text-anchor="middle">17 Oct</text>
+<rect x="422" y="48" width="46" height="472" fill="#f3f4f6" stroke="#e5e7eb"/>
+<text x="445.0" y="63" font-size="12" text-anchor="middle">18 Oct</text>
+<rect x="468" y="48" width="46" height="472" fill="#fff" stroke="#e5e7eb"/>
+<text x="491.0" y="63" font-size="12" text-anchor="middle">19 Oct</text>
+<rect x="514" y="48" width="46" height="472" fill="#fff" stroke="#e5e7eb"/>
+<text x="537.0" y="63" font-size="12" text-anchor="middle">20 Oct</text>
+<rect x="560" y="48" width="46" height="472" fill="#fff" stroke="#e5e7eb"/>
+<text x="583.0" y="63" font-size="12" text-anchor="middle">21 Oct</text>
+<rect x="606" y="48" width="46" height="472" fill="#fff" stroke="#e5e7eb"/>
+<text x="629.0" y="63" font-size="12" text-anchor="middle">22 Oct</text>
+<rect x="652" y="48" width="46" height="472" fill="#fff" stroke="#e5e7eb"/>
+<text x="675.0" y="63" font-size="12" text-anchor="middle">23 Oct</text>
+<rect x="698" y="48" width="46" height="472" fill="#f3f4f6" stroke="#e5e7eb"/>
+<text x="721.0" y="63" font-size="12" text-anchor="middle">24 Oct</text>
+<rect x="744" y="48" width="46" height="472" fill="#f3f4f6" stroke="#e5e7eb"/>
+<text x="767.0" y="63" font-size="12" text-anchor="middle">25 Oct</text>
+<rect x="790" y="48" width="46" height="472" fill="#fff" stroke="#e5e7eb"/>
+<text x="813.0" y="63" font-size="12" text-anchor="middle">26 Oct</text>
+<rect x="836" y="48" width="46" height="472" fill="#fff" stroke="#e5e7eb"/>
+<text x="859.0" y="63" font-size="12" text-anchor="middle">27 Oct</text>
+<rect x="882" y="48" width="46" height="472" fill="#fff" stroke="#e5e7eb"/>
+<text x="905.0" y="63" font-size="12" text-anchor="middle">28 Oct</text>
+<rect x="928" y="48" width="46" height="472" fill="#fff" stroke="#e5e7eb"/>
+<text x="951.0" y="63" font-size="12" text-anchor="middle">29 Oct</text>
+<rect x="974" y="48" width="46" height="472" fill="#fff" stroke="#e5e7eb"/>
+<text x="997.0" y="63" font-size="12" text-anchor="middle">30 Oct</text>
+<rect x="1020" y="48" width="46" height="472" fill="#f3f4f6" stroke="#e5e7eb"/>
+<text x="1043.0" y="63" font-size="12" text-anchor="middle">31 Oct</text>
+<rect x="1066" y="48" width="46" height="472" fill="#f3f4f6" stroke="#e5e7eb"/>
+<text x="1089.0" y="63" font-size="12" text-anchor="middle">1 Nov</text>
+<text x="10" y="89" font-size="13">Explore site, choose and allocate functions</text>
+<rect x="333" y="76" width="132" height="18" rx="4" fill="#6b7280"/>
+<text x="10" y="119" font-size="13">Set up Python/Selenium/pytest environment</text>
+<rect x="471" y="106" width="86" height="18" rx="4" fill="#6b7280"/>
+<path d="M465,85.0 C483,85.0 453,115.0 471,115.0" fill="none" stroke="#9ca3af" stroke-width="1" opacity="0.8" marker-end="url(#a)"/>
+<text x="10" y="149" font-size="13">F01 User registration</text>
+<rect x="563" y="136" width="132" height="18" rx="4" fill="#2563eb"/>
+<path d="M557,115.0 C575,115.0 545,145.0 563,145.0" fill="none" stroke="#9ca3af" stroke-width="1" opacity="0.8" marker-end="url(#a)"/>
+<text x="10" y="179" font-size="13">F02 Login and logout</text>
+<rect x="701" y="166" width="86" height="18" rx="4" fill="#2563eb"/>
+<path d="M695,145.0 C713,145.0 683,175.0 701,175.0" fill="none" stroke="#9ca3af" stroke-width="1" opacity="0.8" marker-end="url(#a)"/>
+<text x="10" y="209" font-size="13">F09 Password reset request</text>
+<rect x="793" y="196" width="86" height="18" rx="4" fill="#2563eb"/>
+<path d="M695,145.0 C713,145.0 775,205.0 793,205.0" fill="none" stroke="#9ca3af" stroke-width="1" opacity="0.8" marker-end="url(#a)"/>
+<text x="10" y="239" font-size="13">F03 Product search</text>
+<rect x="563" y="226" width="132" height="18" rx="4" fill="#059669"/>
+<path d="M557,115.0 C575,115.0 545,235.0 563,235.0" fill="none" stroke="#9ca3af" stroke-width="1" opacity="0.8" marker-end="url(#a)"/>
+<text x="10" y="269" font-size="13">F04 Product details</text>
+<rect x="701" y="256" width="86" height="18" rx="4" fill="#059669"/>
+<path d="M695,235.0 C713,235.0 683,265.0 701,265.0" fill="none" stroke="#9ca3af" stroke-width="1" opacity="0.8" marker-end="url(#a)"/>
+<text x="10" y="299" font-size="13">F08 Product comparison</text>
+<rect x="793" y="286" width="86" height="18" rx="4" fill="#059669"/>
+<path d="M787,265.0 C805,265.0 775,295.0 793,295.0" fill="none" stroke="#9ca3af" stroke-width="1" opacity="0.8" marker-end="url(#a)"/>
+<text x="10" y="329" font-size="13">F05 Add product to cart</text>
+<rect x="793" y="316" width="132" height="18" rx="4" fill="#d97706"/>
+<path d="M787,265.0 C805,265.0 775,325.0 793,325.0" fill="none" stroke="#9ca3af" stroke-width="1" opacity="0.8" marker-end="url(#a)"/>
+<text x="10" y="359" font-size="13">F06 Update/remove cart items</text>
+<rect x="885" y="346" width="86" height="18" rx="4" fill="#d97706"/>
+<path d="M925,325.0 C943,325.0 867,355.0 885,355.0" fill="none" stroke="#9ca3af" stroke-width="1" opacity="0.8" marker-end="url(#a)"/>
+<text x="10" y="389" font-size="13">F10 Checkout form validation</text>
+<rect x="931" y="376" width="86" height="18" rx="4" fill="#d97706"/>
+<path d="M925,325.0 C943,325.0 913,385.0 931,385.0" fill="none" stroke="#9ca3af" stroke-width="1" opacity="0.8" marker-end="url(#a)"/>
+<text x="10" y="419" font-size="13">F11 Edit account information</text>
+<rect x="793" y="406" width="86" height="18" rx="4" fill="#7c3aed"/>
+<path d="M787,175.0 C805,175.0 775,415.0 793,415.0" fill="none" stroke="#9ca3af" stroke-width="1" opacity="0.8" marker-end="url(#a)"/>
+<text x="10" y="449" font-size="13">F12 Address book</text>
+<rect x="885" y="436" width="86" height="18" rx="4" fill="#7c3aed"/>
+<path d="M787,175.0 C805,175.0 867,445.0 885,445.0" fill="none" stroke="#9ca3af" stroke-width="1" opacity="0.8" marker-end="url(#a)"/>
+<text x="10" y="479" font-size="13">F07 Wish list</text>
+<rect x="931" y="466" width="86" height="18" rx="4" fill="#7c3aed"/>
+<path d="M787,175.0 C805,175.0 913,475.0 931,475.0" fill="none" stroke="#9ca3af" stroke-width="1" opacity="0.8" marker-end="url(#a)"/>
+<path d="M787,265.0 C805,265.0 913,475.0 931,475.0" fill="none" stroke="#9ca3af" stroke-width="1" opacity="0.8" marker-end="url(#a)"/>
+<text x="10" y="509" font-size="13">Analysis, reflections, report review</text>
+<rect x="977" y="496" width="132" height="18" rx="4" fill="#6b7280"/>
+<path d="M859.0,138.0 L866.0,145.0 L859.0,152.0 L852.0,145.0 z" fill="#fff" stroke="#111" stroke-width="2"/>
+<path d="M859.0,168.0 L866.0,175.0 L859.0,182.0 L852.0,175.0 z" fill="#fff" stroke="#111" stroke-width="2"/>
+<path d="M859.0,198.0 L866.0,205.0 L859.0,212.0 L852.0,205.0 z" fill="#fff" stroke="#111" stroke-width="2"/>
+<path d="M813.0,228.0 L820.0,235.0 L813.0,242.0 L806.0,235.0 z" fill="#fff" stroke="#111" stroke-width="2"/>
+<path d="M813.0,258.0 L820.0,265.0 L813.0,272.0 L806.0,265.0 z" fill="#fff" stroke="#111" stroke-width="2"/>
+<path d="M813.0,288.0 L820.0,295.0 L813.0,302.0 L806.0,295.0 z" fill="#fff" stroke="#111" stroke-width="2"/>
+<path d="M951.0,318.0 L958.0,325.0 L951.0,332.0 L944.0,325.0 z" fill="#fff" stroke="#111" stroke-width="2"/>
+<path d="M951.0,348.0 L958.0,355.0 L951.0,362.0 L944.0,355.0 z" fill="#fff" stroke="#111" stroke-width="2"/>
+<path d="M951.0,378.0 L958.0,385.0 L951.0,392.0 L944.0,385.0 z" fill="#fff" stroke="#111" stroke-width="2"/>
+<path d="M997.0,408.0 L1004.0,415.0 L997.0,422.0 L990.0,415.0 z" fill="#fff" stroke="#111" stroke-width="2"/>
+<path d="M997.0,438.0 L1004.0,445.0 L997.0,452.0 L990.0,445.0 z" fill="#fff" stroke="#111" stroke-width="2"/>
+<path d="M997.0,468.0 L1004.0,475.0 L997.0,482.0 L990.0,475.0 z" fill="#fff" stroke="#111" stroke-width="2"/>
+<rect x="10" y="539" width="14" height="14" rx="3" fill="#6b7280"/>
+<text x="30" y="550" font-size="12">All members</text>
+<rect x="117" y="539" width="14" height="14" rx="3" fill="#2563eb"/>
+<text x="137" y="550" font-size="12">M1: Aditya Girishkumar Patel</text>
+<rect x="343" y="539" width="14" height="14" rx="3" fill="#059669"/>
+<text x="363" y="550" font-size="12">M2: Chun-Jie Hsieh</text>
+<rect x="499" y="539" width="14" height="14" rx="3" fill="#d97706"/>
+<text x="519" y="550" font-size="12">M3: Wanchai Sangkusolwong</text>
+<rect x="704" y="539" width="14" height="14" rx="3" fill="#7c3aed"/>
+<text x="724" y="550" font-size="12">M4: Tanut Pue-on</text>
+<text x="10" y="574" font-size="12" fill="#4b5563">Arrows show test dependencies: a function is tested only after the function it relies on has passed. Shaded columns are weekends.</text>
+</svg>

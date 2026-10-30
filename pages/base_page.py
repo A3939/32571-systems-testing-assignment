@@ -31,3 +31,9 @@ class BasePage:
 
     def expect_text(self, selector, text):
         self.wait.until(EC.text_to_be_present_in_element((By.CSS_SELECTOR, selector), text))
+
+    def cart_total(self):
+        return self.visible("#cart-total").text.strip()
+
+    def wait_for_ajax(self):
+        self.wait.until(lambda driver: driver.execute_script("return jQuery.active === 0"))

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run Aditya's OpenCart scenarios and open the report from that run."""
+"""Run the OpenCart scenarios for T001/T002/T009 (Aditya) and T005/T006/T010 (Wanchai) and open the report."""
 import argparse
 import os
 from pathlib import Path
@@ -12,6 +12,9 @@ CASES = {
     "registration": "tests/test_registration.py",
     "authentication": "tests/test_login.py",
     "password-reset": "tests/test_password_reset.py",
+    "add-to-cart": "tests/test_add_to_cart.py",
+    "cart-update": "tests/test_cart_update.py",
+    "checkout": "tests/test_checkout.py",
 }
 
 

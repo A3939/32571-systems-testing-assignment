@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="3" time="23.888" timestamp="2026-10-29T22:43:24.539581+11:00" hostname="Wanchais-MacBook-Pro"><testcase classname="tests.test_checkout" name="test_t010_s01_empty_cart_redirect" time="4.039"><properties><property name="screenshot" value="evidence/t010/screenshots/20261029T114328518803-5348d3d20f.png" /><property name="observed_url" value="https://opencart.abstracta.us/index.php?route=checkout/cart" /><property name="observed_heading" value="Shopping Cart" /><property name="observed_alert" value="" /></properties></testcase><testcase classname="tests.test_checkout" name="test_t010_s02_blank_guest_details" time="10.141"><properties><property name="step_guest-form" value="https://opencart.abstracta.us/index.php?route=checkout/checkout" /><property name="screenshot" value="evidence/t010/screenshots/20261029T114338815704-10e689ea99.png" /><property name="observed_url" value="https://opencart.abstracta.us/index.php?route=checkout/checkout" /><property name="observed_heading" value="Checkout" /><property name="observed_alert" value="" /></properties></testcase><testcase classname="tests.test_checkout" name="test_t010_s03_invalid_email_then_corrected" time="9.191"><properties><property name="screenshot" value="evidence/t010/screenshots/20261029T114348159123-7a565845b9.png" /><property name="observed_url" value="https://opencart.abstracta.us/index.php?route=checkout/checkout" /><property name="observed_heading" value="Checkout" /><property name="observed_alert" value="" /></properties><failure message="NotImplementedError: You may not select a disabled option">ipod_in_cart = &lt;pages.cart_page.CartPage object at 0x107a27750&gt;
+driver = &lt;selenium.webdriver.chrome.webdriver.WebDriver (session="3a62100242a4e5d78e325b31072a2c42")&gt;
+base_url = 'https://opencart.abstracta.us'
+checkpoint = &lt;function checkpoint.&lt;locals&gt;.capture at 0x1079e5da0&gt;
+
+    def test_t010_s03_invalid_email_then_corrected(ipod_in_cart, driver, base_url, checkpoint):
+        page = CheckoutPage(driver, base_url).open()
+        page.continue_as_guest()
+&gt;       page.fill_guest_details({**GUEST, "email": "study.tester@"})
+
+tests/test_checkout.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/checkout_page.py:36: in fill_guest_details
+    Select(self.visible("#input-payment-country")).select_by_visible_text(country)
+.venv/lib/python3.13/site-packages/selenium/webdriver/support/select.py:123: in select_by_visible_text
+    self._set_selected(opt)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;selenium.webdriver.support.select.Select object at 0x1079e9550&gt;
+option = &lt;selenium.webdriver.remote.webelement.WebElement (session="3a62100242a4e5d78e325b31072a2c42", element="f.993DE24C9B04C4BD61894C8EF85CE731.d.85F8065A708207350BAE6310724BD275.e.769")&gt;
+
+    def _set_selected(self, option) -&gt; None:
+        if not option.is_selected():
+            if not option.is_enabled():
+&gt;               raise NotImplementedError("You may not select a disabled option")
+E               NotImplementedError: You may not select a disabled option
+
+.venv/lib/python3.13/site-packages/selenium/webdriver/support/select.py:228: NotImplementedError</failure></testcase></testsuite></testsuites>
