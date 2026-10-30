@@ -27,10 +27,10 @@ SCENARIOS = {
     "test_t007_s03_remove_products_from_wishlist": ("Wish list", "T007 · S03", "Remove products from the wish list", "Each removal shows the modified alert; the list ends empty with Wish List (0)."),
     "test_t011_s01_update_name_and_telephone": ("Edit account", "T011 · S01", "Update name and telephone", "Success alert on My Account; the edit form shows the saved values."),
     "test_t011_s02_empty_first_name_rejected": ("Edit account", "T011 · S02", "Reject an empty first name", "Only the first-name message appears and saved details are unchanged."),
-    "test_t011_s03_invalid_email_rejected": ("Edit account", "T011 · S03", "Reject an invalid email", "Only the email message appears and the saved email is unchanged."),
+    "test_t011_s03_invalid_email_rejected": ("Edit account", "T011 · S03", "Reject an invalid email", "The browser blocks the incomplete email; with that skipped the server rejects it; the saved email is unchanged."),
     "test_t012_s01_add_valid_address": ("Address book", "T012 · S01", "Add a valid address", "Added alert; the address book lists the saved address fields."),
     "test_t012_s02_missing_mandatory_fields": ("Address book", "T012 · S02", "Reject missing mandatory fields", "Field messages for each mandatory field; nothing is saved."),
-    "test_t012_s03_edit_then_delete_address": ("Address book", "T012 · S03", "Edit then delete an address", "Updated and deleted alerts; the only remaining address cannot be deleted."),
+    "test_t012_s03_edit_then_delete_address": ("Address book", "T012 · S03", "Edit then delete an address", "The edit form keeps the saved values; updated and deleted alerts; the only remaining address cannot be deleted."),
 }
 
 

@@ -16,7 +16,7 @@ IPHONE, MACBOOK = 40, 43
 
 def test_t007_s01_add_product_to_wishlist(logged_in_account, driver, base_url, checkpoint):
     wishlist = WishListPage(driver, base_url).open()
-    assert "Your wish list is empty." in wishlist.content_text(), "A new account should start with an empty wish list"
+    assert wishlist.product_names() == [], "A new account should start with no wish-list products"
 
     product = ProductWishPage(driver, base_url).open(IPHONE)
     assert product.product_name() == "iPhone"
@@ -49,10 +49,9 @@ def test_t007_s02_wishlist_persists_after_logout(logged_in_account, driver, base
     page.login(*logged_in_account)
     assert page.login_result() == "authenticated"
     menu = AccountMenu(driver, base_url).open()
-    menu.go_to("Modify your wish list")
+    menu.go_to("account/wishlist")
     wishlist = WishListPage(driver, base_url)
-    wishlist.visible("#content h2")
-    assert wishlist.current_route() == "account/wishlist"
+    wishlist.wait.until(lambda d: wishlist.current_route() == "account/wishlist", "Wish list link did not open the wish list")
     assert sorted(wishlist.product_names()) == ["MacBook", "iPhone"]
     wishlist.expect_text("#wishlist-total", "Wish List (2)")
 

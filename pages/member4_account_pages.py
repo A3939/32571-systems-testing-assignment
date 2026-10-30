@@ -63,8 +63,12 @@ class AccountMenu(BasePage):
     def open(self):
         return self.open_route("account/account")
 
-    def go_to(self, link_text):
-        self.wait.until(EC.element_to_be_clickable((By.LINK_TEXT, link_text))).click()
+    def go_to(self, route):
+        """Follow the My Account content link for a route (link labels differ between OpenCart versions)."""
+        self.click(f'#content a[href*="route={route}"]')
+
+    def link_text(self, route):
+        return self.visible(f'#content a[href*="route={route}"]').text.strip()
 
     def success_alert(self):
         return self.visible(".alert-success").text.replace("×", "").strip()
@@ -83,6 +87,16 @@ class EditAccountPage(BasePage):
         for name, value in values.items():
             self.fill(f"#input-{name}", value)
         self.click('#content input[type="submit"]')
+
+    def browser_validation(self, name):
+        """Native HTML5 check: (is the field valid?, the browser's message)."""
+        field = self.visible(f"#input-{name}")
+        return (self.driver.execute_script("return arguments[0].checkValidity();", field),
+                field.get_attribute("validationMessage"))
+
+    def disable_browser_validation(self):
+        """Simulate a client that skips HTML5 checks, so the server-side rule is tested too."""
+        self.driver.execute_script("document.querySelector('#content form').noValidate = true;")
 
     def field_errors(self):
         """Map each field to its inline validation message (OpenCart .text-danger)."""
@@ -174,3 +188,10 @@ class AddressFormPage(BasePage):
 
     def value(self, name):
         return self.visible(f"#input-{name}").get_attribute("value")
+
+    def selected(self, name):
+        return Select(self.visible(f"#input-{name}")).first_selected_option.text.strip()
+
+    def php_notices(self):
+        return [line for line in self.driver.find_element(By.TAG_NAME, "body").text.splitlines()
+                if line.startswith("Notice:") or "Undefined index" in line]

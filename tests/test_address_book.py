@@ -28,7 +28,7 @@ def add_address(driver, base_url, data, default):
 
 def test_t012_s01_add_valid_address(logged_in_account, driver, base_url, checkpoint):
     book = AddressBookPage(driver, base_url).open()
-    assert "You have no addresses in your account." in book.content_text()
+    assert book.entries() == [], "A new account should have no saved addresses"
     book.click_new()
     form = AddressFormPage(driver, base_url)
     assert form.current_route() == "account/address/add"
@@ -62,7 +62,7 @@ def test_t012_s02_missing_mandatory_fields(logged_in_account, driver, base_url, 
     assert form.current_route() == "account/address/add"
 
     book = AddressBookPage(driver, base_url).open()
-    assert "You have no addresses in your account." in book.content_text(), "Invalid address was saved"
+    assert book.entries() == [], "Invalid address was saved"
 
 
 def test_t012_s03_edit_then_delete_address(logged_in_account, driver, base_url, checkpoint):
@@ -74,7 +74,17 @@ def test_t012_s03_edit_then_delete_address(logged_in_account, driver, base_url, 
     book.click_edit("81 Broadway")
     form = AddressFormPage(driver, base_url)
     assert form.value("address-1") == "81 Broadway"
-    form.fill_address(address_1="1 Harris Street", city="Pyrmont")
+    # The edit form must show the saved values. Problems are collected so the edit and
+    # delete steps are still exercised, then reported together at the end.
+    problems = []
+    prefilled = (form.selected("country"), form.selected("zone"))
+    if prefilled != ("Australia", "New South Wales"):
+        problems.append(f"Edit form did not keep the saved country/region: showed {prefilled}")
+    if form.php_notices():
+        problems.append(f"PHP notices on the edit form: {form.php_notices()}")
+    checkpoint("edit-form")
+    form.fill_address(address_1="1 Harris Street", city="Pyrmont",
+                      country="Australia", zone="New South Wales")  # re-select, as a user would
     form.submit()
     assert "Your address has been successfully updated" in book.alert()
     assert any("1 Harris Street" in e and "Pyrmont 2007" in e for e in book.entries()), book.entries()
@@ -90,3 +100,4 @@ def test_t012_s03_edit_then_delete_address(logged_in_account, driver, base_url, 
     book.click_delete("15 Broadway")
     assert "Warning:" in book.alert("warning, .alert-danger"), "Deleting the only (default) address should be refused"
     assert len(book.entries()) == 1
+    assert not problems, "; ".join(problems)

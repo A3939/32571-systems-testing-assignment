@@ -47,12 +47,24 @@ def test_t011_s02_empty_first_name_rejected(logged_in_account, driver, base_url,
 
 def test_t011_s03_invalid_email_rejected(logged_in_account, driver, base_url, checkpoint):
     email = logged_in_account[0]
+    invalid = f"member4-{uuid4().hex[:8]}@"
     page = EditAccountPage(driver, base_url).open()
-    page.update(email=f"member4-{uuid4().hex[:8]}@")
+
+    # Layer 1: the browser's own check on the type="email" field blocks the submit.
+    page.update(email=invalid)
+    valid, message = page.browser_validation("email")
+    assert not valid and message, "Browser accepted an incomplete email"
+    assert page.current_route() == "account/edit"
+    assert not driver.find_elements("css selector", ".alert-success"), "Invalid email was reported as saved"
+    checkpoint("browser-validation")
+
+    # Layer 2: with the browser check skipped, the server must still reject it.
+    page.disable_browser_validation()
+    page.update(email=invalid)
     errors = page.wait_for_errors()
     assert errors == {"email": "E-Mail Address does not appear to be valid!"}, errors
     assert page.current_route() == "account/edit"
-    checkpoint("validation")
+    checkpoint("server-validation")
 
     page.open()
     assert page.values()["email"] == email, "Rejected email replaced the saved address"
