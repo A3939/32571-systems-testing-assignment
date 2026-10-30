@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="3" time="58.897" timestamp="2026-10-30T18:31:44.489969+11:00" hostname="Fluke-Gram"><testcase classname="tests.test_wishlist" name="test_t007_s01_add_product_to_wishlist" time="16.120"><properties><property name="step_added-alert" value="https://opencart.abstracta.us/index.php?route=product/product&amp;product_id=40" /><property name="screenshot" value="evidence\t007\screenshots\20261030T073158543145-8934689b1c.png" /><property name="observed_url" value="https://opencart.abstracta.us/index.php?route=account/wishlist" /><property name="observed_heading" value="" /><property name="observed_alert" value="" /></properties><failure message="AssertionError: {'element': &lt;selenium.webdriver.remote.webelement.WebElement (session=&quot;a1a9e5c9a54b20248c6d3475a9e760ce&quot;, element=&quot;f.9...24E2A.d.3A86616E89BCBD34997EEDD407A7F562.e.432&quot;)&gt;, 'model': 'product 11', 'price': '$101.00', 'product': 'iPhone', ...}&#10;assert ('product 11'...k', '$101.00') == ('product 11'...k', '$123.20')&#10;  &#10;  At index 2 diff: #x1B[0m#x1B[33m'#x1B[39;49;00m#x1B[33m$101.00#x1B[39;49;00m#x1B[33m'#x1B[39;49;00m#x1B[90m#x1B[39;49;00m != #x1B[0m#x1B[33m'#x1B[39;49;00m#x1B[33m$123.20#x1B[39;49;00m#x1B[33m'#x1B[39;49;00m#x1B[90m#x1B[39;49;00m&#10;  Use -v to get more diff">logged_in_account = ('uts-3f05e0511df64a8aa103e633045a6eaf@example.com', 'a3QL-_jo5HhT2l5L')
+driver = &lt;selenium.webdriver.edge.webdriver.WebDriver (session="a1a9e5c9a54b20248c6d3475a9e760ce")&gt;
+base_url = 'https://opencart.abstracta.us', checkpoint = &lt;function checkpoint.&lt;locals&gt;.capture at 0x000001ADA1740360&gt;
+
+    def test_t007_s01_add_product_to_wishlist(logged_in_account, driver, base_url, checkpoint):
+        wishlist = WishListPage(driver, base_url).open()
+        assert wishlist.product_names() == [], "A new account should start with no wish-list products"
+    
+        product = ProductWishPage(driver, base_url).open(IPHONE)
+        assert product.product_name() == "iPhone"
+        alert = product.add_to_wishlist()
+        assert "Success: You have added iPhone to your wish list!" in alert, alert
+        product.wait_header_wishlist_total("Wish List (1)")
+        checkpoint("added-alert")
+    
+        wishlist.open()
+        assert wishlist.current_route() == "account/wishlist"
+        assert wishlist.product_names() == ["iPhone"]
+        row = wishlist.row("iPhone")
+&gt;       assert (row["model"], row["stock"], row["price"]) == ("product 11", "In Stock", "$123.20"), row
+E       AssertionError: {'element': &lt;selenium.webdriver.remote.webelement.WebElement (session="a1a9e5c9a54b20248c6d3475a9e760ce", element="f.9...24E2A.d.3A86616E89BCBD34997EEDD407A7F562.e.432")&gt;, 'model': 'product 11', 'price': '$101.00', 'product': 'iPhone', ...}
+E       assert ('product 11'...k', '$101.00') == ('product 11'...k', '$123.20')
+E         
+E         At index 2 diff: #x1B[0m#x1B[33m'#x1B[39;49;00m#x1B[33m$101.00#x1B[39;49;00m#x1B[33m'#x1B[39;49;00m#x1B[90m#x1B[39;49;00m != #x1B[0m#x1B[33m'#x1B[39;49;00m#x1B[33m$123.20#x1B[39;49;00m#x1B[33m'#x1B[39;49;00m#x1B[90m#x1B[39;49;00m
+E         Use -v to get more diff
+
+tests\test_wishlist.py:32: AssertionError</failure></testcase><testcase classname="tests.test_wishlist" name="test_t007_s02_wishlist_persists_after_logout" time="22.524"><properties><property name="step_two-added" value="https://opencart.abstracta.us/index.php?route=product/product&amp;product_id=43" /><property name="step_logged-out-redirect" value="https://opencart.abstracta.us/index.php?route=account/login" /><property name="screenshot" value="evidence\t007\screenshots\20261030T073221270751-c4fd2ff4b3.png" /><property name="observed_url" value="https://opencart.abstracta.us/index.php?route=account/wishlist" /><property name="observed_heading" value="" /><property name="observed_alert" value="" /></properties></testcase><testcase classname="tests.test_wishlist" name="test_t007_s03_remove_products_from_wishlist" time="19.409"><properties><property name="step_before-remove" value="https://opencart.abstracta.us/index.php?route=account/wishlist" /><property name="step_one-removed" value="https://opencart.abstracta.us/index.php?route=account/wishlist" /><property name="screenshot" value="evidence\t007\screenshots\20261030T073240911858-f6e1f2f2ca.png" /><property name="observed_url" value="https://opencart.abstracta.us/index.php?route=account/wishlist" /><property name="observed_heading" value="" /><property name="observed_alert" value="Success: You have modified your wish list!&#10;×" /></properties><failure message="AssertionError: assert 'Your wish list is empty.' in 'Account\nYour shopping cart is empty!\nContinue'&#10; +  where 'Account\nYour shopping cart is empty!\nContinue' = content_text()&#10; +    where content_text = &lt;pages.member4_account_pages.WishListPage object at 0x000001ADA1E1A9E0&gt;.content_text">logged_in_account = ('uts-a8587447abf048438f4eb4a0a336aaea@example.com', 'tqlEFAMZIizsjUw7')
+driver = &lt;selenium.webdriver.edge.webdriver.WebDriver (session="626ed64dbcee9ba9a34034482738ce79")&gt;
+base_url = 'https://opencart.abstracta.us', checkpoint = &lt;function checkpoint.&lt;locals&gt;.capture at 0x000001AD9EC062A0&gt;
+
+    def test_t007_s03_remove_products_from_wishlist(logged_in_account, driver, base_url, checkpoint):
+        for product_id in (IPHONE, MACBOOK):
+            ProductWishPage(driver, base_url).open(product_id).add_to_wishlist()
+        wishlist = WishListPage(driver, base_url).open()
+        assert sorted(wishlist.product_names()) == ["MacBook", "iPhone"]
+        checkpoint("before-remove")
+    
+        wishlist.remove("iPhone")
+        assert "Success: You have modified your wish list!" in wishlist.success_alert()
+        assert wishlist.product_names() == ["MacBook"]
+        wishlist.expect_text("#wishlist-total", "Wish List (1)")
+        checkpoint("one-removed")
+    
+        wishlist.remove("MacBook")
+        assert "Success: You have modified your wish list!" in wishlist.success_alert()
+        assert wishlist.product_names() == []
+&gt;       assert "Your wish list is empty." in wishlist.content_text()
+E       AssertionError: assert 'Your wish list is empty.' in 'Account\nYour shopping cart is empty!\nContinue'
+E        +  where 'Account\nYour shopping cart is empty!\nContinue' = content_text()
+E        +    where content_text = &lt;pages.member4_account_pages.WishListPage object at 0x000001ADA1E1A9E0&gt;.content_text
+
+tests\test_wishlist.py:75: AssertionError</failure></testcase></testsuite></testsuites>

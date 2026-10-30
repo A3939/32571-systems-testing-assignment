@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="3" time="62.681" timestamp="2026-10-30T18:28:18.726664+11:00" hostname="Fluke-Gram"><testcase classname="tests.test_address_book" name="test_t012_s01_add_valid_address" time="12.102"><properties><property name="screenshot" value="evidence\t012\screenshots\20261030T072828689792-359b503cbc.png" /><property name="observed_url" value="https://opencart.abstracta.us/index.php?route=account/address" /><property name="observed_heading" value="" /><property name="observed_alert" value="" /></properties><failure message="AssertionError: assert 'You have no addresses in your account.' in 'Address Book Entries\nYour shopping cart is empty!\nBack\nNew Address'&#10; +  where 'Address Book Entries\nYour shopping cart is empty!\nBack\nNew Address' = content_text()&#10; +    where content_text = &lt;pages.member4_account_pages.AddressBookPage object at 0x00000218C054CAD0&gt;.content_text">logged_in_account = ('uts-a6bc40d8fca34a8d9abd6420a65eb8a6@example.com', 'c9pMqDx2aksMzdcQ')
+driver = &lt;selenium.webdriver.edge.webdriver.WebDriver (session="b2a12133c325cdaf0f1c0bd0f47a3726")&gt;
+base_url = 'https://opencart.abstracta.us', checkpoint = &lt;function checkpoint.&lt;locals&gt;.capture at 0x00000218C03B0360&gt;
+
+    def test_t012_s01_add_valid_address(logged_in_account, driver, base_url, checkpoint):
+        book = AddressBookPage(driver, base_url).open()
+&gt;       assert "You have no addresses in your account." in book.content_text()
+E       AssertionError: assert 'You have no addresses in your account.' in 'Address Book Entries\nYour shopping cart is empty!\nBack\nNew Address'
+E        +  where 'Address Book Entries\nYour shopping cart is empty!\nBack\nNew Address' = content_text()
+E        +    where content_text = &lt;pages.member4_account_pages.AddressBookPage object at 0x00000218C054CAD0&gt;.content_text
+
+tests\test_address_book.py:31: AssertionError</failure></testcase><testcase classname="tests.test_address_book" name="test_t012_s02_missing_mandatory_fields" time="14.154"><properties><property name="step_validation" value="https://opencart.abstracta.us/index.php?route=account/address/add" /><property name="screenshot" value="evidence\t012\screenshots\20261030T072843154307-7378a369c3.png" /><property name="observed_url" value="https://opencart.abstracta.us/index.php?route=account/address" /><property name="observed_heading" value="" /><property name="observed_alert" value="" /></properties><failure message="AssertionError: Invalid address was saved&#10;assert 'You have no addresses in your account.' in 'Address Book Entries\nYour shopping cart is empty!\nBack\nNew Address'&#10; +  where 'Address Book Entries\nYour shopping cart is empty!\nBack\nNew Address' = content_text()&#10; +    where content_text = &lt;pages.member4_account_pages.AddressBookPage object at 0x00000218C066CF50&gt;.content_text">logged_in_account = ('uts-aa072496f0ea4830a66d68031675e208@example.com', 'hQ4yvKuy65ckO7TQ')
+driver = &lt;selenium.webdriver.edge.webdriver.WebDriver (session="bb850a250223871053e3af1ccffd42eb")&gt;
+base_url = 'https://opencart.abstracta.us', checkpoint = &lt;function checkpoint.&lt;locals&gt;.capture at 0x00000218C052BEC0&gt;
+
+    def test_t012_s02_missing_mandatory_fields(logged_in_account, driver, base_url, checkpoint):
+        form = AddressFormPage(driver, base_url).open_new()
+        form.submit()
+        errors = form.wait_for_errors()
+        checkpoint("validation")
+        expected = {
+            "First Name": "First Name must be between 1 and 32 characters!",
+            "Last Name": "Last Name must be between 1 and 32 characters!",
+            "Address 1": "Address must be between 3 and 128 characters!",
+            "City": "City must be between 2 and 128 characters!",
+            "Region / State": "Please select a region / state!",
+        }
+        for label, message in expected.items():
+            assert errors.get(label) == message, f"{label}: expected {message!r}, got {errors.get(label)!r}; all={errors}"
+        assert "Company" not in errors and "Address 2" not in errors, f"Optional field flagged: {errors}"
+        assert form.current_route() == "account/address/add"
+    
+        book = AddressBookPage(driver, base_url).open()
+&gt;       assert "You have no addresses in your account." in book.content_text(), "Invalid address was saved"
+E       AssertionError: Invalid address was saved
+E       assert 'You have no addresses in your account.' in 'Address Book Entries\nYour shopping cart is empty!\nBack\nNew Address'
+E        +  where 'Address Book Entries\nYour shopping cart is empty!\nBack\nNew Address' = content_text()
+E        +    where content_text = &lt;pages.member4_account_pages.AddressBookPage object at 0x00000218C066CF50&gt;.content_text
+
+tests\test_address_book.py:65: AssertionError</failure></testcase><testcase classname="tests.test_address_book" name="test_t012_s03_edit_then_delete_address" time="35.731"><properties><property name="step_two-addresses" value="https://opencart.abstracta.us/index.php?route=account/address" /><property name="screenshot" value="evidence\t012\screenshots\20261030T072918887184-18d6fdea0c.png" /><property name="observed_url" value="https://opencart.abstracta.us/index.php?route=account/address/edit&amp;address_id=34755" /><property name="observed_heading" value="" /><property name="observed_alert" value="" /></properties><failure message="selenium.common.exceptions.TimeoutException: Message: &#10;Stacktrace:&#10;Symbols not available. Dumping unresolved backtrace:&#10;&#09;(No symbol) [0x7ff6e2ed09d5]&#10;&#09;(No symbol) [0x7ff6e2e175b4]&#10;&#09;(No symbol) [0x7ff6e325f8df]&#10;&#09;(No symbol) [0x7ff6e2bf0212]&#10;&#09;(No symbol) [0x7ff6e2bf049a]&#10;&#09;(No symbol) [0x7ff6e2c30817]&#10;&#09;(No symbol) [0x7ff6e2be651d]&#10;&#09;(No symbol) [0x7ff6e2c2e458]&#10;&#09;(No symbol) [0x7ff6e2be5d5c]&#10;&#09;(No symbol) [0x7ff6e2be4f4a]&#10;&#09;(No symbol) [0x7ff6e2be5b83]&#10;&#09;(No symbol) [0x7ff6e2d25981]&#10;&#09;(No symbol) [0x7ff6e2d35638]&#10;&#09;(No symbol) [0x7ff6e2f796b5]&#10;&#09;(No symbol) [0x7ff6e2f7fd31]&#10;&#09;(No symbol) [0x7ff6e2e2368c]&#10;&#09;(No symbol) [0x7ff6e2e1dea4]&#10;&#09;(No symbol) [0x7ff6e2e1dfca]&#10;&#09;(No symbol) [0x7ff6e2e0f3d8]&#10;&#09;(No symbol) [0x7ffee329dda7]&#10;&#09;(No symbol) [0x7ffee3b7ee4c]">logged_in_account = ('uts-15e7051d3e9f46eb99e941e7b762998a@example.com', '2hBMMDp703g_qBXM')
+driver = &lt;selenium.webdriver.edge.webdriver.WebDriver (session="3bb51bc100de3638e6246c15b2620ee6")&gt;
+base_url = 'https://opencart.abstracta.us', checkpoint = &lt;function checkpoint.&lt;locals&gt;.capture at 0x00000218C060CCC0&gt;
+
+    def test_t012_s03_edit_then_delete_address(logged_in_account, driver, base_url, checkpoint):
+        add_address(driver, base_url, HOME, default=True)
+        book = add_address(driver, base_url, WORK, default=False)
+        assert len(book.entries()) == 2
+        checkpoint("two-addresses")
+    
+        book.click_edit("81 Broadway")
+        form = AddressFormPage(driver, base_url)
+        assert form.value("address-1") == "81 Broadway"
+        form.fill_address(address_1="1 Harris Street", city="Pyrmont")
+        form.submit()
+&gt;       assert "Your address has been successfully updated" in book.alert()
+                                                               ^^^^^^^^^^^^
+
+tests\test_address_book.py:79: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+pages\member4_account_pages.py:127: in alert
+    return self.visible(f".alert-{kind}").text.replace("×", "").strip()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pages\base_page.py:19: in visible
+    return self.wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, selector)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;selenium.webdriver.support.wait.WebDriverWait (session="3bb51bc100de3638e6246c15b2620ee6")&gt;
+method = &lt;function visibility_of_element_located.&lt;locals&gt;._predicate at 0x00000218BD8662A0&gt;, message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -&gt; T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            &gt;&gt;&gt; from selenium.webdriver.common.by import By
+            &gt;&gt;&gt; from selenium.webdriver.support.wait import WebDriverWait
+            &gt;&gt;&gt; from selenium.webdriver.support import expected_conditions as EC
+            &gt;&gt;&gt;
+            &gt;&gt;&gt; # Wait until an element is visible on the page
+            &gt;&gt;&gt; wait = WebDriverWait(driver, 10)
+            &gt;&gt;&gt; element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            &gt;&gt;&gt; print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() &gt; end_time:
+                break
+            time.sleep(self._poll)
+&gt;       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       Symbols not available. Dumping unresolved backtrace:
+E       	(No symbol) [0x7ff6e2ed09d5]
+E       	(No symbol) [0x7ff6e2e175b4]
+E       	(No symbol) [0x7ff6e325f8df]
+E       	(No symbol) [0x7ff6e2bf0212]
+E       	(No symbol) [0x7ff6e2bf049a]
+E       	(No symbol) [0x7ff6e2c30817]
+E       	(No symbol) [0x7ff6e2be651d]
+E       	(No symbol) [0x7ff6e2c2e458]
+E       	(No symbol) [0x7ff6e2be5d5c]
+E       	(No symbol) [0x7ff6e2be4f4a]
+E       	(No symbol) [0x7ff6e2be5b83]
+E       	(No symbol) [0x7ff6e2d25981]
+E       	(No symbol) [0x7ff6e2d35638]
+E       	(No symbol) [0x7ff6e2f796b5]
+E       	(No symbol) [0x7ff6e2f7fd31]
+E       	(No symbol) [0x7ff6e2e2368c]
+E       	(No symbol) [0x7ff6e2e1dea4]
+E       	(No symbol) [0x7ff6e2e1dfca]
+E       	(No symbol) [0x7ff6e2e0f3d8]
+E       	(No symbol) [0x7ffee329dda7]
+E       	(No symbol) [0x7ffee3b7ee4c]
+
+.venv\Lib\site-packages\selenium\webdriver\support\wait.py:121: TimeoutException</failure></testcase></testsuite></testsuites>
