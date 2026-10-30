@@ -72,10 +72,10 @@ def test_t012_s03_edit_then_delete_address(logged_in_account, driver, base_url, 
     checkpoint("two-addresses")
 
     book.click_edit("81 Broadway")
-    form = AddressFormPage(driver, base_url)
+    form = AddressFormPage(driver, base_url).wait_ready()
     assert form.value("address-1") == "81 Broadway"
-    # The edit form must show the saved values. Problems are collected so the edit and
-    # delete steps are still exercised, then reported together at the end.
+    # The edit form must show the saved values (checked after the region list has loaded).
+    # Problems are collected so the edit and delete steps still run, then reported together.
     problems = []
     prefilled = (form.selected("country"), form.selected("zone"))
     if prefilled != ("Australia", "New South Wales"):
@@ -83,8 +83,7 @@ def test_t012_s03_edit_then_delete_address(logged_in_account, driver, base_url, 
     if form.php_notices():
         problems.append(f"PHP notices on the edit form: {form.php_notices()}")
     checkpoint("edit-form")
-    form.fill_address(address_1="1 Harris Street", city="Pyrmont",
-                      country="Australia", zone="New South Wales")  # re-select, as a user would
+    form.fill_address(address_1="1 Harris Street", city="Pyrmont")
     form.submit()
     assert "Your address has been successfully updated" in book.alert()
     assert any("1 Harris Street" in e and "Pyrmont 2007" in e for e in book.entries()), book.entries()

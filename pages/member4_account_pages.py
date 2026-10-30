@@ -16,6 +16,16 @@ class ProductWishPage(BasePage):
     def product_name(self):
         return self.visible("#content h1").text.strip()
 
+    def price(self):
+        """Displayed price for the current session (tax display depends on the customer's address)."""
+        return self.visible("#content ul.list-unstyled h2").text.strip()
+
+    def availability(self):
+        for item in self.driver.find_elements(By.CSS_SELECTOR, "#content ul.list-unstyled li"):
+            if item.text.startswith("Availability:"):
+                return item.text.split(":", 1)[1].strip()
+        return ""
+
     def add_to_wishlist(self):
         self.click(self.WISH_BUTTON)
         return self.wait.until(
@@ -150,7 +160,15 @@ class AddressFormPage(BasePage):
     def open_new(self):
         return self.open_route("account/address/add")
 
+    def wait_ready(self):
+        """The form loads the region list by AJAX and disables Country meanwhile; wait for it."""
+        self.wait.until(lambda d: d.find_element(By.ID, "input-country").is_enabled()
+                        and len(Select(d.find_element(By.ID, "input-zone")).options) > 1,
+                        "Country/region list did not finish loading")
+        return self
+
     def fill_address(self, country=None, zone=None, **values):
+        self.wait_ready()
         for name, value in values.items():
             self.fill(f"#input-{name.replace('_', '-')}", value)
         if country:
@@ -172,6 +190,7 @@ class AddressFormPage(BasePage):
         self.click(f'input[name="default"][value="{1 if default else 0}"]')
 
     def submit(self):
+        self.wait_ready()  # never submit while Country is disabled (it would not be posted)
         self.click('#content input[type="submit"]')
 
     def field_errors(self):
@@ -190,7 +209,8 @@ class AddressFormPage(BasePage):
         return self.visible(f"#input-{name}").get_attribute("value")
 
     def selected(self, name):
-        return Select(self.visible(f"#input-{name}")).first_selected_option.text.strip()
+        chosen = Select(self.visible(f"#input-{name}")).all_selected_options
+        return chosen[0].text.strip() if chosen else "(nothing selected)"
 
     def php_notices(self):
         return [line for line in self.driver.find_element(By.TAG_NAME, "body").text.splitlines()

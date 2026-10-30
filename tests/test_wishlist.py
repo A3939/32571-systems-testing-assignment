@@ -20,6 +20,9 @@ def test_t007_s01_add_product_to_wishlist(logged_in_account, driver, base_url, c
 
     product = ProductWishPage(driver, base_url).open(IPHONE)
     assert product.product_name() == "iPhone"
+    # Oracle: the product page as this logged-in customer sees it (F04). A customer with
+    # no address is shown prices without tax, so the price is read here, not hard-coded.
+    shown = ("product 11", product.availability(), product.price())
     alert = product.add_to_wishlist()
     assert "Success: You have added iPhone to your wish list!" in alert, alert
     product.wait_header_wishlist_total("Wish List (1)")
@@ -29,7 +32,7 @@ def test_t007_s01_add_product_to_wishlist(logged_in_account, driver, base_url, c
     assert wishlist.current_route() == "account/wishlist"
     assert wishlist.product_names() == ["iPhone"]
     row = wishlist.row("iPhone")
-    assert (row["model"], row["stock"], row["price"]) == ("product 11", "In Stock", "$123.20"), row
+    assert (row["model"], row["stock"], row["price"]) == shown, f"Wish list {row} vs product page {shown}"
 
 
 def test_t007_s02_wishlist_persists_after_logout(logged_in_account, driver, base_url, checkpoint):
